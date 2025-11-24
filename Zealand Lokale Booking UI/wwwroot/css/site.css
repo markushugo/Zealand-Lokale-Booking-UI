@@ -96,3 +96,17 @@ header .container {
     display: flex;
     align-items: center;
 }
+
+/*Side navbar for filtering*/
+.sidenav {
+    border: 1px solid #e2e2e2;
+}
+
+    .sidenav label {
+        color: #333;
+    }
+
+.table thead th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+}

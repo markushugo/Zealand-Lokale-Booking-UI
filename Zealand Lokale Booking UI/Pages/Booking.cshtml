@@ -1,4 +1,108 @@
 ﻿@page
 @model Zealand_Lokale_Booking_UI.Pages.BookingModel
 @{
+    <div class="container-fluid mt-4">
+        <div class="row">
+            <!-- SIDENAV -->
+            <div class="col-12 col-md-3 sidenav bg-white p-3 rounded shadow-sm">
+                <h5 class="fw-bold mb-3">Filtre</h5>
+
+                <!-- Lokale -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Lokale:</label>
+                    <select class="form-select">
+                        <option value="">Vælg</option>
+                        <option>1059</option>
+                        <option>1058</option>
+                    </select>
+                </div>
+
+                <!-- Bygning -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Bygning:</label>
+                    <select class="form-select">
+                        <option value="">Vælg</option>
+                        <option>A</option>
+                        <option>B</option>
+                        <option>C</option>
+                        <option>D</option>
+                        <option>E</option>
+                    </select>
+                </div>
+
+                <!-- Etage -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Etage:</label>
+                    <select class="form-select">
+                        <option value="">Vælg</option>
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                    </select>
+                </div>
+
+                <!-- Type -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Type:</label>
+                    <select class="form-select">
+                        <option value="">Vælg</option>
+                        <option>Klasselokale</option>
+                        <option>Møderum</option>
+                    </select>
+                </div>
+
+                <!-- Tid -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tid:</label>
+                    <select class="form-select">
+                        <option value="">Vælg</option>
+                        <option>08–10</option>
+                        <option>10–12</option>
+                        <option>12–14</option>
+                        <option>14-16</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-dark w-100 mt-2">Filtrer</button>
+            </div>
+
+            <!-- TABEL -->
+            <div class="col-12 col-md-9 mt-4 mt-md-0">
+                <div class="table-responsive shadow-sm rounded">
+                    <table class="table table-bordered align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Lokale</th>
+                                <th>Bygning</th>
+                                <th>Etage</th>
+                                <th>Type</th>
+                                <th>Tid</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1059</td>
+                                <td>D</td>
+                                <td>3</td>
+                                <td>Klasselokale</td>
+                                <td>10-12</td>
+                                <td><a class="btn btn-primary w-100">Book</a></td>
+                            </tr>
+
+                            <tr>
+                                <td>1058</td>
+                                <td>D</td>
+                                <td>3</td>
+                                <td>Klasselokale</td>
+                                <td>10-12</td>
+                                <td><a class="btn btn-primary w-100">Book</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
 }

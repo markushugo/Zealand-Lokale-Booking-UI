@@ -18,9 +18,31 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 15px;
 }
 
 .navbar {
     background-color:#fff387;
+    padding:0px 16px;
+    height:60px;
+    padding-top:0;
+    padding-bottom:0;
+}
+
+a.nav-link {
+    padding:8px;
+}
+
+.navbar-brand img {
+    margin: 0 4px 0 0;
+    height: 52px;
+    width: auto;
+}
+
+header .container-fluid,
+header .container {
+    padding-left: 0;
+    padding-right: 0;
 }

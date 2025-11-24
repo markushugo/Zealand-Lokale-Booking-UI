@@ -10,22 +10,33 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
+        <nav class="navbar fixed-top navbar-light navbar-expand" aria-label="Sidenavigation">
             <div class="container-fluid">
-                <img src="https://moodle.zealand.dk/pluginfile.php/1/core_admin/logocompact/300x300/1763629706/Zealand%20Logo%20-%20Moodle.png" class="navbar-brand d-none d-md-flex align-items-center m-0 me-0 p-0" alt="Zealand">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                <!-- Logo -->
+                <a href="/" class="navbar-brand d-none d-md-flex align-items-center m-0 me-4 p-0">
+                    <img src="https://moodle.zealand.dk/pluginfile.php/1/core_admin/logocompact/300x300/1763629706/Zealand%20Logo%20-%20Moodle.png"
+                         class="logo me-1" alt="Zealand" />
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+
+                <!-- Left navigation -->
+                <div class="navbar-collapse collapse d-sm-inline-flex">
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Intranet</a>
+                            <a class="nav-link" asp-area="" asp-page="/Index">Intranet</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Mine rum</a>
+                            <a class="nav-link" asp-area="" asp-page="/Privacy">Mine rum</a>
                         </li>
                     </ul>
+                </div>
+
+                <div id="usernavigation" class="navbar-nav ms-auto">
                 </div>
             </div>
         </nav>

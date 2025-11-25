@@ -1,34 +1,37 @@
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Zealand_Lokale_Booking_Library.Models;
+using Zealand_Lokale_Booking_Library.Services;
 
 namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class BookingModel : PageModel
     {
-        public List<string> Departments { get; set; } = new();
-        public List<string> Buildings { get; set; } = new();
-        public List<string> Floors { get; set; } = new();
-        public List<string> Types { get; set; } = new();
-        public List<string> Rooms { get; set; } = new();
-        public List<string> Times { get; set; } = new();
+        //private readonly IBookingService _bookingService;
 
-        public void OnGet()
-        {
-            Departments = new List<string> { "Roskilde", "Køge", "Slagelse", "Næstved", "Holbæk", "Nykøbing Falster", "Nødebo" };
-            Buildings = new List<string> { "A", "D" };
-            Floors = new List<string> { "1", "2", "3" };
-            Rooms = new List<string> { "1", "2" };
-            Times = new List<string> { "08-10", "10-12", "12-14", "14-16" };
-            Types = new List<string> { "Klasselokale", "Study Room", "Auditorium" };
-        }
+        //public BookingModel(IBookingService bookingService)
+        //{
+        //    _bookingService = bookingService;
+        //}
+        //public List<RoomBooking> Bookings { get; set; } = new();
 
-        public class RoomBooking
-        {
-            public string RoomNumber { get; set; }
-            public string Building { get; set; }
-            public int Floor { get; set; }
-            public string Type { get; set; }
-            public string Time { get; set; }
-        }
+        //public List<string> Departments { get; set; } = new();
+        //public List<string> Buildings { get; set; } = new();
+        //public List<int> Floors { get; set; } = new();
+        //public List<string> Types { get; set; } = new();
+        //public List<string> Rooms { get; set; } = new();
+        //public List<string> Times { get; set; } = new();
+
+        //public void OnGet()
+        //{
+        //    // Collects data from SQL
+        //    Departments = _bookingService.GetDepartments().ToList();
+        //    Buildings = _bookingService.GetBuildings().ToList();
+        //    Floors = _bookingService.GetFloors().ToList();
+        //    Types = _bookingService.GetTypes().ToList();
+        //    Rooms = _bookingService.GetRooms().ToList();
+        //    Times = _bookingService.GetTimes().ToList();
+
+        //    Bookings = _bookingService.GetBookings(new BookingFilter()).ToList();
+        //}
     }
 }

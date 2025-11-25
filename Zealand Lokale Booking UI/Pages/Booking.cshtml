@@ -12,13 +12,10 @@
                     <label class="form-label fw-semibold">Afdeling:</label>
                     <select class="form-select">
                         <option value="">Vælg</option>
-                        <option>Roskilde</option>
-                        <option>Køge</option>
-                        <option>Slagelse</option>
-                        <option>Næstved</option>
-                        <option>Holbæk</option>
-                        <option>Nykøbing Falster</option>
-                        <option>Nødebo</option>
+                        @foreach (var dept in Model.Departments)
+                        {
+                            <option>@dept</option>
+                        }
                     </select>
                 </div>
  
@@ -27,8 +24,10 @@
                     <label class="form-label fw-semibold">Bygning:</label>
                     <select class="form-select">
                         <option value="">Vælg</option>
-                        <option>A</option>
-                        <option>D</option>
+                        @foreach (var building in Model.Buildings)
+                        {
+                            <option>@building</option>
+                        }
                     </select>
                 </div>
 
@@ -37,9 +36,10 @@
                     <label class="form-label fw-semibold">Etage:</label>
                     <select class="form-select">
                         <option value="">Vælg</option>
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
+                        @foreach (var floor in Model.Floors)
+                        {
+                            <option>@floor</option>
+                        }
                     </select>
                 </div>
 
@@ -48,8 +48,10 @@
                     <label class="form-label fw-semibold">Type:</label>
                     <select class="form-select">
                         <option value="">Vælg</option>
-                        <option>Klasselokale</option>
-                        <option>Møderum</option>
+                        @foreach (var type in Model.Types)
+                        {
+                            <option>@type</option>
+                        }
                     </select>
                 </div>
 
@@ -58,8 +60,10 @@
                     <label class="form-label fw-semibold">Lokale:</label>
                     <select class="form-select">
                         <option value="">Vælg</option>
-                        <option>1059</option>
-                        <option>1058</option>
+                        @foreach (var room in Model.Rooms)
+                        {
+                            <option>@room</option>
+                        }
                     </select>
                 </div>
 
@@ -69,10 +73,10 @@
                     <label class="form-label fw-semibold">Tid:</label>
                     <select class="form-select">
                         <option value="">Vælg</option>
-                        <option>08–10</option>
-                        <option>10–12</option>
-                        <option>12–14</option>
-                        <option>14-16</option>
+                        @foreach (var time in Model.Times)
+                        {
+                            <option>@time</option>
+                        }
                     </select>
                 </div>
 

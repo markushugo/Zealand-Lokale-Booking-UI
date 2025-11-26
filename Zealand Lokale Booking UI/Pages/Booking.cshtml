@@ -124,17 +124,14 @@
                                 <td>@b.StartTime.ToString(@"hh")-@b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh")
                                 </td>
                                 <td>
-                                    <button type="button"
-                                            class="btn btn-primary btn-sm w-100"
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#bookModal"
-                                            data-booking-id="@b.BookingID"
-                                            data-room="@b.RoomName"
-                                            data-building="@b.BuildingName"
-                                            data-date='@b.Date.ToString("yyyy-MM-dd")'
-                                            data-time='@($"{b.StartTime:hh\\:mm} - {b.StartTime.Add(TimeSpan.FromHours(2)):hh\\:mm}")'>
-                                        Book
-                                    </button>
+                                <td>
+                                    <form method="post" asp-page-handler="PrepareBooking">
+                                        <input type="hidden" name="roomId" value="@b.RoomID" />
+                                        <button type="submit" class="btn btn-primary btn-sm w-100">
+                                            Book
+                                        </button>
+                                    </form>
+                                </td>
                                 </td>
                             </tr>
                         }
@@ -145,31 +142,36 @@
     </div>
 </div>
 
-<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+@if (Model.ShowPopup)
+{
+    <div class="modal-backdrop show"></div>
 
-            <div class="modal-header">
-                <h5 class="modal-title" id="bookModalLabel">Bekræft booking</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Luk"></button>
+    <div class="modal d-block" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Bekræft booking</h5>
+                </div>
+
+                <form method="post" asp-page-handler="Book">
+                    <div class="modal-body">
+                        <input type="hidden" name="bookingId" value="@Model.TempBookingRoomID" />
+
+                        <p><strong>Lokale:</strong> @Model.TempRoomName</p>
+                        <p><strong>Afdeling:</strong> @Model.TempDepartmentName</p>
+                        <p><strong>Bygning:</strong> @Model.TempBuildingName</p>
+                        <p><strong>Dato:</strong> @Model.TempBookingDate?.ToString("yyyy-MM-dd")</p>
+                        <p><strong>Tid:</strong> @Model.TempBookingTime</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <a asp-page="./Booking" class="btn btn-secondary">Annullér</a>
+                        <button type="submit" class="btn btn-primary">Bekræft booking</button>
+                    </div>
+                </form>
+
             </div>
-
-            <form method="post" asp-page-handler="Book">
-                <div class="modal-body">
-                    <input type="hidden" name="BookingId" id="modalBookingId" />
-
-                    <p><strong>Lokale:</strong> <span id="modalRoom"></span></p>
-                    <p><strong>Bygning:</strong> <span id="modalBuilding"></span></p>
-                    <p><strong>Dato:</strong> <span id="modalDate"></span></p>
-                    <p><strong>Tid:</strong> <span id="modalTime"></span></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annullér</button>
-                    <button type="submit" class="btn btn-primary">Bekræft booking</button>
-                </div>
-            </form>
-
         </div>
     </div>
-</div>
+}

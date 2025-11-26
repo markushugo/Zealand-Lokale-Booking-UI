@@ -9,12 +9,12 @@ namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class BookingModel : PageModel
     {
-        
+
 
         public BookingModel()
         {
         }
-        public List<Booking> AvailableBookings { get; set; }
+        public List<Booking> AvailableBookings { get; set; } = new();
 
         public List<RoomBooking> Bookings { get; set; } = new();
         public List<string> Departments { get; set; } = new();
@@ -24,6 +24,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
         public List<string> Rooms { get; set; } = new();
         public List<string> Times { get; set; } = new();
         public DateTime? Date { get; set; }
+
 
         [BindProperty] public List<string> SelectedDepartments { get; set; } = new();
         public List<SelectListItem> DepartmentOptions { get; set; }
@@ -37,7 +38,18 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public string SelectedType { get; set; }
         [BindProperty] public DateTime? SelectedDate { get; set; }
 
-        public void OnGet()
+        [TempData] public string TempBookingRoomID { get; set; }
+        [TempData] public string TempBookingTime { get; set; }
+        [TempData] public DateTime? TempBookingDate { get; set; }
+        [TempData] public string TempRoomName { get; set; }
+        [TempData] public string TempBuildingName { get; set; }
+        [TempData] public string TempDepartmentName { get; set; }
+
+        public bool ShowPopup { get; set; } = false;
+
+       
+
+        private void LoadData()
         {
             AvailableBookings = new()
             {
@@ -51,7 +63,19 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 new Booking { BookingID = null, Date = new DateTime(2025,1,15), StartTime = new TimeSpan(15,0,0), UserID = 16, UserName = "Emil", RoomID = 108, RoomName = "Lokale 108", Level = "1", RoomTypeID = 3, RoomType = "IT-Lab", Capacity = 28, BuildingID = 2, BuildingName = "Labbygning", DepartmentID = 12, DepartmentName = "IT", SmartBoardID = 2 },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,16), StartTime = new TimeSpan(9,30,0), UserID = null, UserName = null, RoomID = 109, RoomName = "Lokale 109", Level = "2", RoomTypeID = 2, RoomType = "Mødelokale", Capacity = 16, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 11, DepartmentName = "Markedsføring", SmartBoardID = null },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,16), StartTime = new TimeSpan(12,0,0), UserID = 5, UserName = "Laura", RoomID = 110, RoomName = "Lokale 110", Level = "2", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 22, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = 1 }
+
             };
+        }
+        public void OnGet()
+        {
+            LoadData();
+
+            if (!string.IsNullOrEmpty(TempRoomName))
+            {
+                ShowPopup = true;
+            }
+
+          
 
             DepartmentOptions = new()
             {
@@ -66,6 +90,23 @@ namespace Zealand_Lokale_Booking_UI.Pages
             Rooms = new List<string> { "1", "2" };
             Times = new List<string> { "08-10", "10-12", "12-14", "14-16" };
             Types = new List<string> { "Klasselokale", "Study Room", "Auditorium" };
+        }
+        public IActionResult OnPostPrepareBooking(int roomId)
+        {
+            LoadData();
+            var booking = AvailableBookings.FirstOrDefault(b => b.RoomID == roomId);
+
+            if (booking != null)
+            {
+                TempRoomName = booking.RoomName;
+                TempBuildingName = booking.BuildingName;
+                TempBookingRoomID = booking.RoomID.ToString();
+                TempBookingDate = booking.Date;
+                TempBookingTime = booking.StartTime.ToString(@"hh\:mm") + "-" + booking.StartTime.Add(new TimeSpan(2, 0, 0)).ToString(@"hh\:mm");
+                TempDepartmentName = booking.DepartmentName;
+
+            }
+            return RedirectToPage();
         }
     }
 }

@@ -1,0 +1,38 @@
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\appsettings.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.staticwebassets.runtime.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.staticwebassets.endpoints.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.exe
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.deps.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.runtimeconfig.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.dll
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking UI.pdb
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.AssemblyInfoInputs.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.AssemblyInfo.cs
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.csproj.CoreCompileInputs.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.RazorAssemblyInfo.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.RazorAssemblyInfo.cs
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.sourcelink.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rjimswa.dswa.cache.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\scopedcss\Pages\Shared\_Layout.cshtml.rz.scp.css
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\scopedcss\bundle\Zealand Lokale Booking UI.styles.css
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\scopedcss\projectbundle\Zealand Lokale Booking UI.bundle.scp.css
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.build.endpoints.json
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.upToDateCheck.txt
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.dll
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\refint\Zealand Lokale Booking UI.dll
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.pdb
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.genruntimeconfig.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\ref\Zealand Lokale Booking UI.dll
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking Library.dll
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\bin\Debug\net8.0\Zealand Lokale Booking Library.pdb
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.csproj.AssemblyReference.cache
+C:\Users\mathi\Source\Repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand .25A17136.Up2Date

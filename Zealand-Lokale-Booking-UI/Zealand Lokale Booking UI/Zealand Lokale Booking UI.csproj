@@ -8,9 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Reference Include="Zealand Lokale Booking Library">
-      <HintPath>..\..\Zealand Lokale Booking Library\Zealand Lokale Booking Library\bin\Debug\net8.0\Zealand Lokale Booking Library.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
 </Project>

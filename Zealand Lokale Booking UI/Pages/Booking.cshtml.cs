@@ -48,10 +48,16 @@ namespace Zealand_Lokale_Booking_UI.Pages
             foreach (var id in SelectedTimes)
                 Console.WriteLine(" - " + id);
             Console.WriteLine($"Selected Date: {SelectedDate}");
+            _populate();
             return Page();
         }
 
         public void OnGet()
+        {
+            _populate();
+        }
+
+        private void _populate()
         {
             AvailableBookings = new()
             {
@@ -97,5 +103,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 new SelectListItem { Value = "14", Text = "14-16" }
             };
         }
+
+        
     }
 }

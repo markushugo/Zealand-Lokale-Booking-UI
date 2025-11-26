@@ -8,18 +8,6 @@
             <form method="post">
                 <h5 class="fw-bold mb-3">Filtre</h5>
 
-                @* <!-- Department -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Afdeling:</label>
-                    <select asp-for="SelectedDepartment" class="form-control" id="DepartmentSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var dept in Model.Departments)
-                        {
-                            <option value="@dept">@dept</option>
-                        }
-                    </select>
-                </div> *@
-
                 <!-- Departments -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Afdeling</label>

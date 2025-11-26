@@ -4,89 +4,92 @@
     <div class="container-fluid mt-4">
         <div class="row">
             <!-- SIDENAV -->
-            <div class="col-12 col-md-3 sidenav bg-white p-3 rounded shadow-sm">
-                <h5 class="fw-bold mb-3">Filtre</h5>
+            <form method="post">
+                <div class="col-12 col-md-3 sidenav bg-white p-3 rounded shadow-sm">
+                    <h5 class="fw-bold mb-3">Filtre</h5>
 
-                <!-- Department -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Afdeling:</label>
-                    <select class="form-select">
-                        <option value="">Vælg</option>
-                        @foreach (var dept in Model.Departments)
-                        {
-                            <option>@dept</option>
-                        }
-                    </select>
-                </div>
+                    <!-- Department -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Afdeling:</label>
+                        <select asp-for="SelectedDepartment" class="form-control" id="DepartmentSelect">
+                            <option value="">Vælg</option>
+                                @foreach (var dept in Model.Departments)
+                                {
+                                    <option value="@dept">@dept</option>
+                                }
+                        </select>
+                    </div>
  
-                <!-- Building -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Bygning:</label>
-                    <select class="form-select">
-                        <option value="">Vælg</option>
-                        @foreach (var building in Model.Buildings)
-                        {
-                            <option>@building</option>
-                        }
-                    </select>
+                    <!-- Building -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Bygning:</label>
+                            <select asp-for="SelectedBuilding" class="form-control" id="BuildingSelect">
+                                <option value="">Vælg</option>
+                                    @foreach (var building in Model.Buildings)
+                                    {
+                                        <option value="@building">@building</option>
+                                    }
+                        </select>
+                    </div>
+
+                    <!-- Floor -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Etage:</label>
+                            <select asp-for="SelectedFloor" class="form-control" id="FloorSelect">
+                            <option value="">Vælg</option>
+                            @foreach (var floor in Model.Floors)
+                            {
+                                <option value="@floor">@floor</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Type -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Type:</label>
+                        <select asp-for="SelectedType" class="form-control" id="TypeSelect">
+                            <option value="">Vælg</option>
+                            @foreach (var type in Model.Types)
+                            {
+                                <option value="@type">@type</option>
+                            }
+                        </select>
+                    </div>
+
+                    <!-- Room -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Lokale:</label>
+                        <select asp-for="SelectedRoom" class="form-control" id="RoomSelect">
+                            <option value="">Vælg</option>
+                            @foreach (var room in Model.Rooms)
+                            {
+                                <option value="@room">@room</option>
+                            }
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Dato:</label>
+                        <input asp-for="Date" class="form-control" type="date" />
+                    </div>
+
+                    <!-- Time -->
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Tid:</label>
+                        <select asp-for="SelectedTime" class="form-control" id="TimeSelect">
+                            <option value="">Vælg</option>
+                            @foreach (var time in Model.Times)
+                            {
+                                <option value="@time">@time</option>
+                            }
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark w-100 mt-2">
+                        Filtrer
+                    </button>
                 </div>
-
-                <!-- Floor -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Etage:</label>
-                    <select class="form-select">
-                        <option value="">Vælg</option>
-                        @foreach (var floor in Model.Floors)
-                        {
-                            <option>@floor</option>
-                        }
-                    </select>
-                </div>
-
-                <!-- Type -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Type:</label>
-                    <select class="form-select">
-                        <option value="">Vælg</option>
-                        @foreach (var type in Model.Types)
-                        {
-                            <option>@type</option>
-                        }
-                    </select>
-                </div>
-
-                <!-- Room -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Lokale:</label>
-                    <select class="form-select">
-                        <option value="">Vælg</option>
-                        @foreach (var room in Model.Rooms)
-                        {
-                            <option>@room</option>
-                        }
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Dato:</label>
-                        <input class="form-control" type="date" data-interval="true" data-val-required="Data feltet skal defineres" id="Date" name="Date" value="2025-11-25" />
-                </div>
-
-                <!-- Time -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tid:</label>
-                    <select class="form-select">
-                        <option value="">Vælg</option>
-                        @foreach (var time in Model.Times)
-                        {
-                            <option>@time</option>
-                        }
-                    </select>
-                </div>
-
-                <button class="btn btn-dark w-100 mt-2">Filtrer</button>
-            </div>
-
+            </form>
             
 
            </div>

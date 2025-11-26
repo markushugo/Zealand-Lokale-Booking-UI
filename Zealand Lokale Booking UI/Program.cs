@@ -1,3 +1,5 @@
+using Zealand_Lokale_Booking_Library.Services;
+
 namespace Zealand_Lokale_Booking_UI
 {
     public class Program

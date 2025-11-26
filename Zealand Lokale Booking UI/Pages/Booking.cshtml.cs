@@ -25,32 +25,61 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
         [BindProperty] public List<int> SelectedDepartments { get; set; } = new();
         [BindProperty] public List<int> SelectedBuildings { get; set; } = new();
-        [BindProperty] public List<int> SelectedLevels { get; set; } = new();
+        [BindProperty] public List<string> SelectedLevels { get; set; } = new();
         [BindProperty] public List<int> SelectedRoomTypes { get; set; } = new();
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
-        public IActionResult OnPost()
+        public IActionResult OnPostFilter()
         {
-            Console.WriteLine("Selected Departments:");
-            foreach (var id in SelectedDepartments)
-                Console.WriteLine(" - " + id);
-            Console.WriteLine("Selected Buildings:");
-            foreach (var id in SelectedBuildings)
-                Console.WriteLine(" - " + id);
-            Console.WriteLine("Selected Levels:");
-            foreach (var id in SelectedLevels)
-                Console.WriteLine(" - " + id);
-            Console.WriteLine("Selected Room Types:");
-            foreach (var id in SelectedRoomTypes)
-                Console.WriteLine(" - " + id);
-            Console.WriteLine("Selected Times:");
-            foreach (var id in SelectedTimes)
-                Console.WriteLine(" - " + id);
-            Console.WriteLine($"Selected Date: {SelectedDate}");
+            if (!ModelState.IsValid)
+            {
+                _populate();
+                return Page();
+            }
+            var filter = new BookingFilter
+            {
+                UserID = 1,
+                Date = SelectedDate,
+                DepartmentIds = _nullIfEmpty(SelectedDepartments),
+                BuildingIds = _nullIfEmpty(SelectedBuildings),
+                RoomIds = null,
+                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
+                Levels = _nullIfEmpty(SelectedLevels),
+                Times = _convertHours(SelectedTimes)
+            };
+            // ====== DEBUG OUTPUT ======
+            Console.WriteLine("===== BOOKING FILTER =====");
+            Console.WriteLine($"UserID: {filter.UserID}");
+            Console.WriteLine($"Date: {filter.Date:yyyy-MM-dd}");
+
+            Console.WriteLine($"Departments: {_formatList(filter.DepartmentIds)}");
+            Console.WriteLine($"Buildings: {_formatList(filter.BuildingIds)}");
+            Console.WriteLine($"RoomIds (legacy): {_formatList(filter.RoomIds)}");
+            Console.WriteLine($"RoomTypes: {_formatList(filter.RoomTypeIds)}");
+            Console.WriteLine($"Levels: {_formatList(filter.Levels)}");
+
+            Console.WriteLine("Times: " +
+                (filter.Times == null ? "null" : string.Join(", ", filter.Times.Select(t => t.ToString("HH:mm")))));
+
+            Console.WriteLine("===========================");
+
             _populate();
             return Page();
         }
+
+        // helpers
+        private static List<T>? _nullIfEmpty<T>(List<T> list) =>
+            list.Count > 0 ? list : null;
+
+        private static List<TimeOnly>? _convertHours(List<int> hours) =>
+            hours.Count > 0
+                ? hours.Select(h => new TimeOnly(h, 0)).ToList()
+                : null;
+
+        private static string _formatList<T>(List<T>? list) =>
+            list == null ? "null" : string.Join(", ", list);
+
 
         public void OnGet()
         {

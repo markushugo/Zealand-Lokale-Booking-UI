@@ -5,7 +5,7 @@
     <div class="row">
         <!-- SIDENAV -->
         <div class="col-12 col-md-3 sidenav bg-white p-3 rounded shadow-sm">
-            <form method="post">
+            <form method="post" asp-page-handler="Filter">
                 <h5 class="fw-bold mb-3">Filtre</h5>
 
                 <!-- Departments -->
@@ -52,7 +52,7 @@
                         @foreach (var option in Model.LevelOptions)
                         {
                             <label class="d-block ms-3 mt-2">
-                                <input type="checkbox" name="SelectedLevels" value="@option.Value" @(Model.SelectedLevels.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                <input type="checkbox" name="SelectedLevels" value="@option.Value" />
                                 @option.Text
                             </label>
                         }
@@ -95,7 +95,7 @@
 
                 <!-- Date -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Dato:</label>
+                    <label class="form-label fw-semibold">Dato</label>
                     <input asp-for="SelectedDate" class="form-control" type="date" />
                 </div>
 

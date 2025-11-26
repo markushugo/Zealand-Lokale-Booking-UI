@@ -37,9 +37,7 @@
                     </details>
                 </div>
 
-
-
-              @*   <!-- Building -->
+                @*   <!-- Building -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Bygning:</label>
                     <select asp-for="SelectedBuilding" class="form-control" id="BuildingSelect">
@@ -106,35 +104,72 @@
                     <thead class="table-light">
                         <tr>
                             <th>Lokale</th>
+                            <th>Afdelin</th>
                             <th>Bygning</th>
                             <th>Etage</th>
                             <th>Type</th>
                             <th>Tid</th>
-                            <th></th>
+                            <th>Book</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1059</td>
-                            <td>D</td>
-                            <td>3</td>
-                            <td>Klasselokale</td>
-                            <td>10-12</td>
-                            <td><a class="btn btn-primary w-100">Book</a></td>
-                        </tr>
-                        <tr>
-                            <td>1058</td>
-                            <td>D</td>
-                            <td>3</td>
-                            <td>Klasselokale</td>
-                            <td>10-12</td>
-                            <td><a class="btn btn-primary w-100">Book</a></td>
-                        </tr>
+                        @foreach (var b in Model.AvailableBookings)
+                        {
+                            <tr>
+                                <td>@b.RoomName</td>
+                                <td>@b.DepartmentName</td>
+                                <td>@b.BuildingName</td>
+                                <td>@b.Level</td>
+                                <td>@b.RoomType</td>
+                                <td>@b.StartTime.ToString(@"hh")-@b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh")
+                                </td>
+                                <td>
+                                    <button type="button"
+                                            class="btn btn-primary btn-sm w-100"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#bookModal"
+                                            data-booking-id="@b.BookingID"
+                                            data-room="@b.RoomName"
+                                            data-building="@b.BuildingName"
+                                            data-date='@b.Date.ToString("yyyy-MM-dd")'
+                                            data-time='@($"{b.StartTime:hh\\:mm} - {b.StartTime.Add(TimeSpan.FromHours(2)):hh\\:mm}")'>
+                                        Book
+                                    </button>
+                                </td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
         </div>
-
     </div>
 </div>
 
+<div class="modal fade" id="bookModal" tabindex="-1" aria-labelledby="bookModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="bookModalLabel">Bekræft booking</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Luk"></button>
+            </div>
+
+            <form method="post" asp-page-handler="Book">
+                <div class="modal-body">
+                    <input type="hidden" name="BookingId" id="modalBookingId" />
+
+                    <p><strong>Lokale:</strong> <span id="modalRoom"></span></p>
+                    <p><strong>Bygning:</strong> <span id="modalBuilding"></span></p>
+                    <p><strong>Dato:</strong> <span id="modalDate"></span></p>
+                    <p><strong>Tid:</strong> <span id="modalTime"></span></p>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annullér</button>
+                    <button type="submit" class="btn btn-primary">Bekræft booking</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -8,7 +8,7 @@
             <form method="post">
                 <h5 class="fw-bold mb-3">Filtre</h5>
 
-                <!-- Department -->
+                @* <!-- Department -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Afdeling:</label>
                     <select asp-for="SelectedDepartment" class="form-control" id="DepartmentSelect">
@@ -18,9 +18,28 @@
                             <option value="@dept">@dept</option>
                         }
                     </select>
+                </div> *@
+
+                <!-- Departments -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Afdeling:</label>
+
+                    <details class="form-control p-2" style="cursor:pointer;">
+                        <summary>Vælg</summary>
+
+                        @foreach (var dept in Model.Departments)
+                        {
+                            <label class="d-block ms-3 mt-2">
+                                <input type="checkbox" name="SelectedDepartments" value="@dept" />
+                                @dept
+                            </label>
+                        }
+                    </details>
                 </div>
 
-                <!-- Building -->
+
+
+              @*   <!-- Building -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Bygning:</label>
                     <select asp-for="SelectedBuilding" class="form-control" id="BuildingSelect">
@@ -54,19 +73,7 @@
                             <option value="@type">@type</option>
                         }
                     </select>
-                </div>
-
-                <!-- Room -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Lokale:</label>
-                    <select asp-for="SelectedRoom" class="form-control" id="RoomSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var room in Model.Rooms)
-                        {
-                            <option value="@room">@room</option>
-                        }
-                    </select>
-                </div>
+                </div> *@
 
                 <!-- Date -->
                 <div class="mb-3">
@@ -74,7 +81,7 @@
                     <input asp-for="Date" class="form-control" type="date" />
                 </div>
 
-                <!-- Time -->
+                @* <!-- Time -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Tid:</label>
                     <select asp-for="SelectedTime" class="form-control" id="TimeSelect">
@@ -84,7 +91,7 @@
                             <option value="@time">@time</option>
                         }
                     </select>
-                </div>
+                </div> *@
 
                 <button type="submit" class="btn btn-dark w-100 mt-2">
                     Filtrer
@@ -130,4 +137,4 @@
 
     </div>
 </div>
-}
+

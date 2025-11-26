@@ -1,4 +1,4 @@
-html {
+﻿html {
     font-size: 14px;
 }
 
@@ -109,4 +109,28 @@ header .container {
 .table thead th {
     background-color: #f8f9fa;
     font-weight: 600;
+}
+
+details summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Hide default marker */
+details summary::-webkit-details-marker {
+    display: none;
+}
+
+/* Custom arrow */
+details summary::after {
+    content: "▸"; /* arrow character */
+    font-size: 1.5rem; /* <--- MAKE IT BIGGER HERE */
+    line-height: 1;
+    transition: transform 0.2s ease;
+}
+
+/* Rotate when open */
+details[open] summary::after {
+    transform: rotate(90deg);
 }

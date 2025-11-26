@@ -16,26 +16,40 @@ namespace Zealand_Lokale_Booking_UI.Pages
         }
         public List<Booking> AvailableBookings { get; set; }
 
-        public List<RoomBooking> Bookings { get; set; } = new();
-        public List<string> Departments { get; set; } = new();
-        public List<string> Buildings { get; set; } = new();
-        public List<int> Floors { get; set; } = new();
-        public List<string> Types { get; set; } = new();
-        public List<string> Rooms { get; set; } = new();
-        public List<string> Times { get; set; } = new();
+        public List<SelectListItem> DepartmentOptions { get; set; } = new();
+        public List<SelectListItem> BuildingOptions { get; set; } = new();
+        public List<SelectListItem> LevelOptions { get; set; } = new();
+        public List<SelectListItem> RoomTypeOptions { get; set; } = new();
+        public List<SelectListItem> TimeOptions { get; set; } = new();
         public DateTime? Date { get; set; }
 
-        [BindProperty] public List<string> SelectedDepartments { get; set; } = new();
-        public List<SelectListItem> DepartmentOptions { get; set; }
+        [BindProperty] public List<int> SelectedDepartments { get; set; } = new();
+        [BindProperty] public List<int> SelectedBuildings { get; set; } = new();
+        [BindProperty] public List<int> SelectedLevels { get; set; } = new();
+        [BindProperty] public List<int> SelectedRoomTypes { get; set; } = new();
+        [BindProperty] public List<int> SelectedTimes { get; set; } = new();
+        [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
-
-        [BindProperty] public string SelectedDepartment { get; set; }
-        [BindProperty] public string SelectedBuilding { get; set; }
-        [BindProperty] public int SelectedFloor { get; set; }
-        [BindProperty] public string SelectedRoom { get; set; }
-        [BindProperty] public string SelectedTime { get; set; }
-        [BindProperty] public string SelectedType { get; set; }
-        [BindProperty] public DateTime? SelectedDate { get; set; }
+        public IActionResult OnPost()
+        {
+            Console.WriteLine("Selected Departments:");
+            foreach (var id in SelectedDepartments)
+                Console.WriteLine(" - " + id);
+            Console.WriteLine("Selected Buildings:");
+            foreach (var id in SelectedBuildings)
+                Console.WriteLine(" - " + id);
+            Console.WriteLine("Selected Levels:");
+            foreach (var id in SelectedLevels)
+                Console.WriteLine(" - " + id);
+            Console.WriteLine("Selected Room Types:");
+            foreach (var id in SelectedRoomTypes)
+                Console.WriteLine(" - " + id);
+            Console.WriteLine("Selected Times:");
+            foreach (var id in SelectedTimes)
+                Console.WriteLine(" - " + id);
+            Console.WriteLine($"Selected Date: {SelectedDate}");
+            return Page();
+        }
 
         public void OnGet()
         {
@@ -53,19 +67,35 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 new Booking { BookingID = 102, Date = new DateTime(2025,1,16), StartTime = new TimeSpan(12,0,0), UserID = 5, UserName = "Laura", RoomID = 110, RoomName = "Lokale 110", Level = "2", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 22, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = 1 }
             };
 
-            DepartmentOptions = new()
+            DepartmentOptions = new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "Roskile" },
                 new SelectListItem { Value = "2", Text = "Køge" },
-                new SelectListItem { Value = "3", Text = "Slagelse" }
             };
-
-            Departments = new List<string> { "Roskilde", "Køge", "Slagelse", "Næstved", "Holbæk", "Nykøbing Falster", "Nødebo" };
-            Buildings = new List<string> { "A", "D" };
-            Floors = new List<int> { 1, 2, 3 };
-            Rooms = new List<string> { "1", "2" };
-            Times = new List<string> { "08-10", "10-12", "12-14", "14-16" };
-            Types = new List<string> { "Klasselokale", "Study Room", "Auditorium" };
+            BuildingOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "A" },
+                new SelectListItem { Value = "2", Text = "D" }
+            };
+            LevelOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "1" },
+                new SelectListItem { Value = "2", Text = "2" },
+                new SelectListItem { Value = "3", Text = "3" }
+            };
+            RoomTypeOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Classroom" },
+                new SelectListItem { Value = "2", Text = "Studyroom" },
+                new SelectListItem { Value = "3", Text = "Auditorium" }
+            };
+            TimeOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "8", Text = "8-10" },
+                new SelectListItem { Value = "10", Text = "10-12" },
+                new SelectListItem { Value = "12", Text = "12-14" },
+                new SelectListItem { Value = "14", Text = "14-16" }
+            };
         }
     }
 }

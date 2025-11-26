@@ -91,12 +91,8 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
        
 
-        private void LoadData()
 
-        public void OnGet()
-        {
-            _populate();
-        }
+   
 
         private void _populate()
         {
@@ -117,16 +113,16 @@ namespace Zealand_Lokale_Booking_UI.Pages
         }
         public void OnGet()
         {
-            LoadData();
+            _populate();
 
             if (!string.IsNullOrEmpty(TempRoomName))
             {
                 ShowPopup = true;
             }
 
-          
 
-            DepartmentOptions = new()
+
+            DepartmentOptions = new();
             DepartmentOptions = new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "Roskile" },
@@ -157,16 +153,11 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 new SelectListItem { Value = "14", Text = "14-16" }
             };
 
-            Departments = new List<string> { "Roskilde", "Køge", "Slagelse", "Næstved", "Holbæk", "Nykøbing Falster", "Nødebo" };
-            Buildings = new List<string> { "A", "D" };
-            Floors = new List<int> { 1, 2, 3 };
-            Rooms = new List<string> { "1", "2" };
-            Times = new List<string> { "08-10", "10-12", "12-14", "14-16" };
-            Types = new List<string> { "Klasselokale", "Study Room", "Auditorium" };
         }
         public IActionResult OnPostPrepareBooking(int roomId)
         {
-            LoadData();
+            
+            _populate();
             var booking = AvailableBookings.FirstOrDefault(b => b.RoomID == roomId);
 
             if (booking != null)

@@ -16,27 +16,69 @@ namespace Zealand_Lokale_Booking_UI.Pages
         }
         public List<Booking> AvailableBookings { get; set; } = new();
 
-        public List<RoomBooking> Bookings { get; set; } = new();
-        public List<string> Departments { get; set; } = new();
-        public List<string> Buildings { get; set; } = new();
-        public List<int> Floors { get; set; } = new();
-        public List<string> Types { get; set; } = new();
-        public List<string> Rooms { get; set; } = new();
-        public List<string> Times { get; set; } = new();
+        public List<SelectListItem> DepartmentOptions { get; set; } = new();
+        public List<SelectListItem> BuildingOptions { get; set; } = new();
+        public List<SelectListItem> LevelOptions { get; set; } = new();
+        public List<SelectListItem> RoomTypeOptions { get; set; } = new();
+        public List<SelectListItem> TimeOptions { get; set; } = new();
         public DateTime? Date { get; set; }
 
+        [BindProperty] public List<int> SelectedDepartments { get; set; } = new();
+        [BindProperty] public List<int> SelectedBuildings { get; set; } = new();
+        [BindProperty] public List<string> SelectedLevels { get; set; } = new();
+        [BindProperty] public List<int> SelectedRoomTypes { get; set; } = new();
+        [BindProperty] public List<int> SelectedTimes { get; set; } = new();
+        [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
-        [BindProperty] public List<string> SelectedDepartments { get; set; } = new();
-        public List<SelectListItem> DepartmentOptions { get; set; }
+        public IActionResult OnPostFilter()
+        {
+            if (!ModelState.IsValid)
+            {
+                _populate();
+                return Page();
+            }
+            var filter = new BookingFilter
+            {
+                UserID = 1,
+                Date = SelectedDate,
+                DepartmentIds = _nullIfEmpty(SelectedDepartments),
+                BuildingIds = _nullIfEmpty(SelectedBuildings),
+                RoomIds = null,
+                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
+                Levels = _nullIfEmpty(SelectedLevels),
+                Times = _convertHours(SelectedTimes)
+            };
+            // ====== DEBUG OUTPUT ======
+            Console.WriteLine("===== BOOKING FILTER =====");
+            Console.WriteLine($"UserID: {filter.UserID}");
+            Console.WriteLine($"Date: {filter.Date:yyyy-MM-dd}");
 
+            Console.WriteLine($"Departments: {_formatList(filter.DepartmentIds)}");
+            Console.WriteLine($"Buildings: {_formatList(filter.BuildingIds)}");
+            Console.WriteLine($"RoomIds (legacy): {_formatList(filter.RoomIds)}");
+            Console.WriteLine($"RoomTypes: {_formatList(filter.RoomTypeIds)}");
+            Console.WriteLine($"Levels: {_formatList(filter.Levels)}");
 
-        [BindProperty] public string SelectedDepartment { get; set; }
-        [BindProperty] public string SelectedBuilding { get; set; }
-        [BindProperty] public int SelectedFloor { get; set; }
-        [BindProperty] public string SelectedRoom { get; set; }
-        [BindProperty] public string SelectedTime { get; set; }
-        [BindProperty] public string SelectedType { get; set; }
-        [BindProperty] public DateTime? SelectedDate { get; set; }
+            Console.WriteLine("Times: " +
+                (filter.Times == null ? "null" : string.Join(", ", filter.Times.Select(t => t.ToString("HH:mm")))));
+
+            Console.WriteLine("===========================");
+
+            _populate();
+            return Page();
+        }
+
+        // helpers
+        private static List<T>? _nullIfEmpty<T>(List<T> list) =>
+            list.Count > 0 ? list : null;
+
+        private static List<TimeOnly>? _convertHours(List<int> hours) =>
+            hours.Count > 0
+                ? hours.Select(h => new TimeOnly(h, 0)).ToList()
+                : null;
+
+        private static string _formatList<T>(List<T>? list) =>
+            list == null ? "null" : string.Join(", ", list);
 
         [TempData] public string TempBookingRoomID { get; set; }
         [TempData] public string TempBookingTime { get; set; }
@@ -50,6 +92,13 @@ namespace Zealand_Lokale_Booking_UI.Pages
        
 
         private void LoadData()
+
+        public void OnGet()
+        {
+            _populate();
+        }
+
+        private void _populate()
         {
             AvailableBookings = new()
             {
@@ -78,10 +127,34 @@ namespace Zealand_Lokale_Booking_UI.Pages
           
 
             DepartmentOptions = new()
+            DepartmentOptions = new List<SelectListItem>
             {
                 new SelectListItem { Value = "1", Text = "Roskile" },
                 new SelectListItem { Value = "2", Text = "Køge" },
-                new SelectListItem { Value = "3", Text = "Slagelse" }
+            };
+            BuildingOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "A" },
+                new SelectListItem { Value = "2", Text = "D" }
+            };
+            LevelOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "1" },
+                new SelectListItem { Value = "2", Text = "2" },
+                new SelectListItem { Value = "3", Text = "3" }
+            };
+            RoomTypeOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "1", Text = "Classroom" },
+                new SelectListItem { Value = "2", Text = "Studyroom" },
+                new SelectListItem { Value = "3", Text = "Auditorium" }
+            };
+            TimeOptions = new List<SelectListItem>
+            {
+                new SelectListItem { Value = "8", Text = "8-10" },
+                new SelectListItem { Value = "10", Text = "10-12" },
+                new SelectListItem { Value = "12", Text = "12-14" },
+                new SelectListItem { Value = "14", Text = "14-16" }
             };
 
             Departments = new List<string> { "Roskilde", "Køge", "Slagelse", "Næstved", "Holbæk", "Nykøbing Falster", "Nødebo" };

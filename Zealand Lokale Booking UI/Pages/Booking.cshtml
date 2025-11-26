@@ -5,95 +5,102 @@
     <div class="row">
         <!-- SIDENAV -->
         <div class="col-12 col-md-3 sidenav bg-white p-3 rounded shadow-sm">
-            <form method="post">
+            <form method="post" asp-page-handler="Filter">
                 <h5 class="fw-bold mb-3">Filtre</h5>
-
-                @* <!-- Department -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Afdeling:</label>
-                    <select asp-for="SelectedDepartment" class="form-control" id="DepartmentSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var dept in Model.Departments)
-                        {
-                            <option value="@dept">@dept</option>
-                        }
-                    </select>
-                </div> *@
 
                 <!-- Departments -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Afdeling:</label>
+                    <label class="form-label fw-semibold">Afdeling</label>
 
                     <details class="form-control p-2" style="cursor:pointer;">
                         <summary>Vælg</summary>
 
-                        @foreach (var dept in Model.Departments)
+                        @foreach (var option in Model.DepartmentOptions)
                         {
                             <label class="d-block ms-3 mt-2">
-                                <input type="checkbox" name="SelectedDepartments" value="@dept" />
-                                @dept
+                                <input type="checkbox" name="SelectedDepartments" value="@option.Value" @(Model.SelectedDepartments.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                @option.Text
                             </label>
                         }
                     </details>
                 </div>
 
-                @*   <!-- Building -->
+                <!-- Buildings -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Bygning:</label>
-                    <select asp-for="SelectedBuilding" class="form-control" id="BuildingSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var building in Model.Buildings)
+                    <label class="form-label fw-semibold">Bygning</label>
+
+                    <details class="form-control p-2" style="cursor:pointer;">
+                        <summary>Vælg</summary>
+
+                        @foreach (var option in Model.BuildingOptions)
                         {
-                            <option value="@building">@building</option>
+                            <label class="d-block ms-3 mt-2">
+                                <input type="checkbox" name="SelectedBuildings" value="@option.Value" @(Model.SelectedBuildings.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                @option.Text
+                            </label>
                         }
-                    </select>
+                    </details>
                 </div>
 
-                <!-- Floor -->
+                <!-- Levels -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Etage:</label>
-                    <select asp-for="SelectedFloor" class="form-control" id="FloorSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var floor in Model.Floors)
+                    <label class="form-label fw-semibold">Etage</label>
+
+                    <details class="form-control p-2" style="cursor:pointer;">
+                        <summary>Vælg</summary>
+
+                        @foreach (var option in Model.LevelOptions)
                         {
-                            <option value="@floor">@floor</option>
+                            <label class="d-block ms-3 mt-2">
+                                <input type="checkbox" name="SelectedLevels" value="@option.Value" />
+                                @option.Text
+                            </label>
                         }
-                    </select>
+                    </details>
                 </div>
 
-                <!-- Type -->
+                <!-- RoomTypes -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Type:</label>
-                    <select asp-for="SelectedType" class="form-control" id="TypeSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var type in Model.Types)
+                    <label class="form-label fw-semibold">Lokaletype</label>
+
+                    <details class="form-control p-2" style="cursor:pointer;">
+                        <summary>Vælg</summary>
+
+                        @foreach (var option in Model.RoomTypeOptions)
                         {
-                            <option value="@type">@type</option>
+                            <label class="d-block ms-3 mt-2">
+                                <input type="checkbox" name="SelectedRoomTypes" value="@option.Value" @(Model.SelectedRoomTypes.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                @option.Text
+                            </label>
                         }
-                    </select>
-                </div> *@
+                    </details>
+                </div>
+
+                <!-- Times -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Tid</label>
+
+                    <details class="form-control p-2" style="cursor:pointer;">
+                        <summary>Vælg</summary>
+
+                        @foreach (var option in Model.TimeOptions)
+                        {
+                            <label class="d-block ms-3 mt-2">
+                                <input type="checkbox" name="SelectedTimes" value="@option.Value" @(Model.SelectedTimes.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                @option.Text
+                            </label>
+                        }
+                    </details>
+                </div>
 
                 <!-- Date -->
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Dato:</label>
-                    <input asp-for="Date" class="form-control" type="date" />
+                    <label class="form-label fw-semibold">Dato</label>
+                    <input asp-for="SelectedDate" class="form-control" type="date" />
                 </div>
 
-                @* <!-- Time -->
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tid:</label>
-                    <select asp-for="SelectedTime" class="form-control" id="TimeSelect">
-                        <option value="">Vælg</option>
-                        @foreach (var time in Model.Times)
-                        {
-                            <option value="@time">@time</option>
-                        }
-                    </select>
-                </div> *@
-
-                <button type="submit" class="btn btn-dark w-100 mt-2">
-                    Filtrer
-                </button>
+                <!-- Submit -->
+                <button type="submit" class="btn btn-dark w-100 mt-2"> Filtrer </button>
             </form>
         </div>
 

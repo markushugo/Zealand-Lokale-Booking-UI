@@ -9,11 +9,15 @@ namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class BookingModel : PageModel
     {
+        private readonly FilterRepository _filterRepository;
 
-
-        public BookingModel()
+        public BookingModel(FilterRepository filterRepository)
         {
+            _filterRepository = filterRepository;
         }
+
+        public FilterOptions Filters { get; set; } = new();
+
         public List<Booking> AvailableBookings { get; set; } = new();
 
         public List<SelectListItem> DepartmentOptions { get; set; } = new();
@@ -96,6 +100,52 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
         private void _populate()
         {
+            // 1) Hent filtermuligheder fra databasen
+            int userId = 1; // TODO: skift når du har login
+            var filterData = _filterRepository.GetFilterOptionsForUserAsync(userId).Result;
+
+            // 2) Map til dine UI-properties (DepartmentOptions, BuildingOptions osv.)
+
+            DepartmentOptions = filterData.Departments
+                .Select(d => new SelectListItem
+                {
+                    Value = d.Key,
+                    Text = d.Value
+                })
+                .ToList();
+
+            BuildingOptions = filterData.Buildings
+                .Select(b => new SelectListItem
+                {
+                    Value = b.Key,
+                    Text = b.Value
+                })
+                .ToList();
+
+            LevelOptions = filterData.LevelOptions
+                .Select(l => new SelectListItem
+                {
+                    Value = l.Key,
+                    Text = l.Value
+                })
+                .ToList();
+
+            RoomTypeOptions = filterData.RoomTypes
+                .Select(rt => new SelectListItem
+                {
+                    Value = rt.Key,
+                    Text = rt.Value
+                })
+                .ToList();
+
+            TimeOptions = filterData.TimeSlots
+                .Select(t => new SelectListItem
+                {
+                    Value = t.Key,
+                    Text = t.Value
+                })
+                .ToList();
+
             AvailableBookings = new()
             {
                 new Booking { BookingID = null, Date = new DateTime(2025,1,12), StartTime = new TimeSpan(8,0,0), UserID = null, UserName = null, RoomID = 101, RoomName = "Lokale 101", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 24, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = null },
@@ -122,36 +172,36 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
 
 
-            DepartmentOptions = new();
-            DepartmentOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Roskile" },
-                new SelectListItem { Value = "2", Text = "Køge" },
-            };
-            BuildingOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "A" },
-                new SelectListItem { Value = "2", Text = "D" }
-            };
-            LevelOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "1" },
-                new SelectListItem { Value = "2", Text = "2" },
-                new SelectListItem { Value = "3", Text = "3" }
-            };
-            RoomTypeOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "1", Text = "Classroom" },
-                new SelectListItem { Value = "2", Text = "Studyroom" },
-                new SelectListItem { Value = "3", Text = "Auditorium" }
-            };
-            TimeOptions = new List<SelectListItem>
-            {
-                new SelectListItem { Value = "8", Text = "8-10" },
-                new SelectListItem { Value = "10", Text = "10-12" },
-                new SelectListItem { Value = "12", Text = "12-14" },
-                new SelectListItem { Value = "14", Text = "14-16" }
-            };
+            //DepartmentOptions = new();
+            //DepartmentOptions = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "1", Text = "Roskile" },
+            //    new SelectListItem { Value = "2", Text = "Køge" },
+            //};
+            //BuildingOptions = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "1", Text = "A" },
+            //    new SelectListItem { Value = "2", Text = "D" }
+            //};
+            //LevelOptions = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "1", Text = "1" },
+            //    new SelectListItem { Value = "2", Text = "2" },
+            //    new SelectListItem { Value = "3", Text = "3" }
+            //};
+            //RoomTypeOptions = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "1", Text = "Classroom" },
+            //    new SelectListItem { Value = "2", Text = "Studyroom" },
+            //    new SelectListItem { Value = "3", Text = "Auditorium" }
+            //};
+            //TimeOptions = new List<SelectListItem>
+            //{
+            //    new SelectListItem { Value = "8", Text = "8-10" },
+            //    new SelectListItem { Value = "10", Text = "10-12" },
+            //    new SelectListItem { Value = "12", Text = "12-14" },
+            //    new SelectListItem { Value = "14", Text = "14-16" }
+            //};
 
         }
         public IActionResult OnPostPrepareBooking(int roomId)

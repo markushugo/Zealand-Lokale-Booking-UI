@@ -40,9 +40,10 @@
               "RelativeDocumentMoniker": "Zealand Lokale Booking UI\\Pages\\Booking.cshtml",
               "ToolTip": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\Booking.cshtml",
               "RelativeToolTip": "Zealand Lokale Booking UI\\Pages\\Booking.cshtml",
-              "ViewState": "AgIAAJcAAAAAAAAAAAAiwKwAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAJMAAAAAAAAAAAAAAKwAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-25T09:11:58.737Z"
+              "WhenOpened": "2025-11-25T09:11:58.737Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -52,7 +53,7 @@
               "RelativeDocumentMoniker": "Zealand Lokale Booking UI\\Pages\\Booking.cshtml.cs",
               "ToolTip": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\Booking.cshtml.cs",
               "RelativeToolTip": "Zealand Lokale Booking UI\\Pages\\Booking.cshtml.cs",
-              "ViewState": "AgIAAIgAAAAAAAAAAAAkwJIAAAAaAAAAAAAAAA==",
+              "ViewState": "AgIAAIwAAAAAAAAAAAAUwJQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T09:20:26.814Z",
               "EditorCaption": ""
@@ -65,7 +66,7 @@
               "RelativeDocumentMoniker": "Zealand Lokale Booking UI\\Program.cs",
               "ToolTip": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Program.cs",
               "RelativeToolTip": "Zealand Lokale Booking UI\\Program.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAwBIAAACBAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-25T09:04:20.044Z",
               "EditorCaption": ""
@@ -78,9 +79,10 @@
               "RelativeDocumentMoniker": "Zealand Lokale Booking UI\\Pages\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "Zealand Lokale Booking UI\\Pages\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAABUAAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAIBJwBUAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-11-25T09:04:24.191Z"
+              "WhenOpened": "2025-11-25T09:04:24.191Z",
+              "EditorCaption": ""
             }
           ]
         }

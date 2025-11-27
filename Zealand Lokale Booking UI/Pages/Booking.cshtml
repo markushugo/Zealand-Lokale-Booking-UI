@@ -161,9 +161,15 @@
                     <h5 class="modal-title">Bekræft booking</h5>
                 </div>
 
-                <form method="post" asp-page-handler="Book">
+                <form method="post" asp-page-handler="CreateBooking">
+
                     <div class="modal-body">
-                        <input type="hidden" name="bookingId" value="@Model.TempBookingRoomID" />
+                        <input type="hidden" asp-for="NewBookingRoomID" value="@Model.TempBookingRoomID" />
+                        <input type="hidden" asp-for="NewBookingStartTime" value="@Model.TempBookingTime" />
+                        <input type="hidden" asp-for="NewBookingDate" value="@Model.TempBookingDate" />
+
+
+
 
                         <p><strong>Lokale:</strong> @Model.TempRoomName</p>
                         <p><strong>Afdeling:</strong> @Model.TempDepartmentName</p>

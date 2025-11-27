@@ -4,15 +4,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Zealand_Lokale_Booking_Library.Models;
 using Zealand_Lokale_Booking_Library.Services;
+using Zealand_Lokale_Booking_Library.Repos;
 
 namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class BookingModel : PageModel
     {
+        private readonly CreateBookingRepo _createBookingRepo=new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
 
-
+        //private readonly ICreateBookingService _createBookingService;
         public BookingModel()
         {
+            //_createBookingService = createBookingService;
+
         }
         public List<Booking> AvailableBookings { get; set; } = new();
 
@@ -29,6 +33,18 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public List<int> SelectedRoomTypes { get; set; } = new();
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
+
+
+        [BindProperty]
+        public int NewBookingRoomID { get; set; }
+
+        [BindProperty]
+        public DateTime? NewBookingDate { get; set; }
+
+        [BindProperty]
+        public TimeSpan NewBookingStartTime { get; set; }
+
+
 
         public IActionResult OnPostFilter()
         {
@@ -67,6 +83,45 @@ namespace Zealand_Lokale_Booking_UI.Pages
             _populate();
             return Page();
         }
+        public async Task<IActionResult> OnPostCreateBookingAsync()
+        {
+            Console.WriteLine("BOOK KALDT! ID=");
+
+
+            int userId = 1; // Skift til session når du får login på plads
+
+            try
+            {
+                await _createBookingRepo.CreateBookingAsync
+                (
+                    2,
+                    2,
+                    DateTime.Parse("2025-12-29"),
+                    TimeSpan.Parse("12:00"),
+                    null
+                );
+
+                TempData["SuccessMessage"] = $"Booking created! ID";
+            }
+            catch (ArgumentException ex)
+            {
+                // Service-valideringsfejl
+                ModelState.AddModelError("", ex.Message);
+                return Page();
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
+            }
+
+            return RedirectToPage();
+        }
+
+
 
         // helpers
         private static List<T>? _nullIfEmpty<T>(List<T> list) =>
@@ -98,7 +153,8 @@ namespace Zealand_Lokale_Booking_UI.Pages
         {
             AvailableBookings = new()
             {
-                new Booking { BookingID = null, Date = new DateTime(2025,1,12), StartTime = new TimeSpan(8,0,0), UserID = null, UserName = null, RoomID = 101, RoomName = "Lokale 101", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 24, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = null },
+              
+                new Booking { BookingID = null, Date = new DateTime(2025,12,12), StartTime = new TimeSpan(10,0,0), UserID = null, UserName = null, RoomID = 1, RoomName = "Lokale 101", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 24, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = null },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,12), StartTime = new TimeSpan(10,0,0), UserID = 8, UserName = "Sara", RoomID = 102, RoomName = "Lokale 102", Level = "1", RoomTypeID = 2, RoomType = "Mødelokale", Capacity = 12, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = 3 },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,13), StartTime = new TimeSpan(9,0,0), UserID = null, UserName = null, RoomID = 103, RoomName = "Lokale 103", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 30, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 11, DepartmentName = "Markedsføring", SmartBoardID = null },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,13), StartTime = new TimeSpan(13,0,0), UserID = 21, UserName = "Oliver", RoomID = 104, RoomName = "Lokale 104", Level = "2", RoomTypeID = 3, RoomType = "IT-Lab", Capacity = 20, BuildingID = 2, BuildingName = "Labbygning", DepartmentID = 12, DepartmentName = "IT", SmartBoardID = 7 },

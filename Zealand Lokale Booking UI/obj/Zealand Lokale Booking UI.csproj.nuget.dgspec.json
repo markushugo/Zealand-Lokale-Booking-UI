@@ -1,15 +1,15 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj": {}
+    "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj": {
+    "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
+        "projectUniqueName": "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
         "projectName": "Zealand Lokale Booking UI",
-        "projectPath": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
+        "projectPath": "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
         "packagesPath": "C:\\Users\\theod\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\obj\\",
         "projectStyle": "PackageReference",

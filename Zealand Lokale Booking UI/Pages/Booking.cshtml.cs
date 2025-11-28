@@ -35,15 +35,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
 
-        [BindProperty]
-        public int NewBookingRoomID { get; set; }
-
-        [BindProperty]
-        public DateTime? NewBookingDate { get; set; }
-
-        [BindProperty]
-        public TimeSpan NewBookingStartTime { get; set; }
-
 
 
         public IActionResult OnPostFilter()
@@ -83,35 +74,27 @@ namespace Zealand_Lokale_Booking_UI.Pages
             _populate();
             return Page();
         }
-        public async Task<IActionResult> OnPostCreateBookingAsync()
+        public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
         {
-            Console.WriteLine("BOOK KALDT! ID=");
-
-
-            int userId = 1; // Skift til session når du får login på plads
-
             try
             {
-                await _createBookingRepo.CreateBookingAsync
-                (
-                    2,
-                    2,
-                    DateTime.Parse("2025-12-29"),
-                    TimeSpan.Parse("12:00"),
+                // "10:00-12:00" "10:00"
+                var startTime = TimeSpan.Parse(time.Split('-')[0]);
+
+                await _createBookingRepo.CreateBookingAsync(
+                    roomId,
+                    1,          // userId (later from session)/
+                    date,
+                    startTime,
                     null
                 );
 
-                TempData["SuccessMessage"] = $"Booking created! ID";
+                TempData["SuccessMessage"] = "Booking created!";
             }
             catch (ArgumentException ex)
             {
-                // Service-valideringsfejl
                 ModelState.AddModelError("", ex.Message);
                 return Page();
-            }
-            catch (InvalidOperationException ex)
-            {
-                TempData["ErrorMessage"] = ex.Message;
             }
             catch (Exception ex)
             {
@@ -154,7 +137,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
             AvailableBookings = new()
             {
               
-                new Booking { BookingID = null, Date = new DateTime(2025,12,12), StartTime = new TimeSpan(10,0,0), UserID = null, UserName = null, RoomID = 1, RoomName = "Lokale 101", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 24, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = null },
+                new Booking { BookingID = null, Date = new DateTime(2025,12,14), StartTime = new TimeSpan(10,0,0), UserID = null, UserName = null, RoomID = 1, RoomName = "Lokale 101", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 24, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = null },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,12), StartTime = new TimeSpan(10,0,0), UserID = 8, UserName = "Sara", RoomID = 102, RoomName = "Lokale 102", Level = "1", RoomTypeID = 2, RoomType = "Mødelokale", Capacity = 12, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 10, DepartmentName = "Datamatiker", SmartBoardID = 3 },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,13), StartTime = new TimeSpan(9,0,0), UserID = null, UserName = null, RoomID = 103, RoomName = "Lokale 103", Level = "1", RoomTypeID = 1, RoomType = "Undervisning", Capacity = 30, BuildingID = 1, BuildingName = "Hovedbygning", DepartmentID = 11, DepartmentName = "Markedsføring", SmartBoardID = null },
                 new Booking { BookingID = null, Date = new DateTime(2025,1,13), StartTime = new TimeSpan(13,0,0), UserID = 21, UserName = "Oliver", RoomID = 104, RoomName = "Lokale 104", Level = "2", RoomTypeID = 3, RoomType = "IT-Lab", Capacity = 20, BuildingID = 2, BuildingName = "Labbygning", DepartmentID = 12, DepartmentName = "IT", SmartBoardID = 7 },

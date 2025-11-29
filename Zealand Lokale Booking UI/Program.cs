@@ -1,4 +1,6 @@
+using Zealand_Lokale_Booking_Library.Models;
 using Zealand_Lokale_Booking_Library.Services;
+using Zealand_Lokale_Booking_Library.Repos;
 
 namespace Zealand_Lokale_Booking_UI
 {
@@ -11,6 +13,13 @@ namespace Zealand_Lokale_Booking_UI
 
             // Add services to the container.
             builder.Services.AddRazorPages();
+
+            builder.Services.AddScoped<FilterRepository>(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                var connStr = "Server=(localdb)\\MSSQLlocaldb; database=ZealandBooking; encrypt=false; integrated security=true;";
+                return new FilterRepository(connStr);
+            });
 
             var app = builder.Build();
 

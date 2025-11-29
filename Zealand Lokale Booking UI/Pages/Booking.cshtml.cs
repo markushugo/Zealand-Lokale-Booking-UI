@@ -18,7 +18,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
         }
 
         public FilterOptions Filters { get; set; } = new();
-
+        public BookingFilter BookingFilter { get; set; } = new BookingFilter { UserID = 1 };
         public List<Booking> AvailableBookings { get; set; } = new();
 
         public List<SelectListItem> DepartmentOptions { get; set; } = new();
@@ -42,7 +42,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 _populate();
                 return Page();
             }
-            var filter = new BookingFilter
+            BookingFilter = new BookingFilter
             {
                 UserID = 1,
                 Date = SelectedDate,
@@ -53,22 +53,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 Levels = _nullIfEmpty(SelectedLevels),
                 Times = _convertHours(SelectedTimes)
             };
-            // ====== DEBUG OUTPUT ======
-            Console.WriteLine("===== BOOKING FILTER =====");
-            Console.WriteLine($"UserID: {filter.UserID}");
-            Console.WriteLine($"Date: {filter.Date:yyyy-MM-dd}");
-
-            Console.WriteLine($"Departments: {_formatList(filter.DepartmentIds)}");
-            Console.WriteLine($"Buildings: {_formatList(filter.BuildingIds)}");
-            Console.WriteLine($"RoomIds (legacy): {_formatList(filter.RoomIds)}");
-            Console.WriteLine($"RoomTypes: {_formatList(filter.RoomTypeIds)}");
-            Console.WriteLine($"Levels: {_formatList(filter.Levels)}");
-
-            Console.WriteLine("Times: " +
-                (filter.Times == null ? "null" : string.Join(", ", filter.Times.Select(t => t.ToString("HH:mm")))));
-
-            Console.WriteLine("===========================");
-            AvailableBookings = _filterRepository.GetAvailableBookingSlots((filter)).ToList();
             _populate();
             return Page();
         }
@@ -94,18 +78,11 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
         public bool ShowPopup { get; set; } = false;
 
-       
-
-
-   
-
         private void _populate()
         {
-            // 1) Hent filtermuligheder fra databasen
-            int userId = 1; // TODO: skift når du har login
+            AvailableBookings = _filterRepository.GetAvailableBookingSlots((BookingFilter)).ToList();
+            int userId = 1; // TODO: change when there is login
             var filterData = _filterRepository.GetFilterOptionsForUserAsync(userId).Result;
-
-            // 2) Map til dine UI-properties (DepartmentOptions, BuildingOptions osv.)
 
             DepartmentOptions = filterData.Departments
                 .Select(d => new SelectListItem
@@ -154,40 +131,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
             {
                 ShowPopup = true;
             }
-
-
-
-            //DepartmentOptions = new();
-            //DepartmentOptions = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "1", Text = "Roskile" },
-            //    new SelectListItem { Value = "2", Text = "Køge" },
-            //};
-            //BuildingOptions = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "1", Text = "A" },
-            //    new SelectListItem { Value = "2", Text = "D" }
-            //};
-            //LevelOptions = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "1", Text = "1" },
-            //    new SelectListItem { Value = "2", Text = "2" },
-            //    new SelectListItem { Value = "3", Text = "3" }
-            //};
-            //RoomTypeOptions = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "1", Text = "Classroom" },
-            //    new SelectListItem { Value = "2", Text = "Studyroom" },
-            //    new SelectListItem { Value = "3", Text = "Auditorium" }
-            //};
-            //TimeOptions = new List<SelectListItem>
-            //{
-            //    new SelectListItem { Value = "8", Text = "8-10" },
-            //    new SelectListItem { Value = "10", Text = "10-12" },
-            //    new SelectListItem { Value = "12", Text = "12-14" },
-            //    new SelectListItem { Value = "14", Text = "14-16" }
-            //};
-
         }
         public IActionResult OnPostPrepareBooking(int roomId)
         {

@@ -134,3 +134,9 @@ details summary::after {
 details[open] summary::after {
     transform: rotate(90deg);
 }
+
+div.modal-header {
+    background-color: #fff387;
+    border-bottom: 1px solid #e2e2e2;
+    font-weight: 600;
+}

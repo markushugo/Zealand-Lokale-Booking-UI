@@ -43,6 +43,14 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 _populate();
                 return Page();
             }
+
+            BuildBookingFilterFromSelection();
+            _populate();
+            return Page();
+        }
+
+        private void BuildBookingFilterFromSelection()
+        {
             BookingFilter = new BookingFilter
             {
                 UserID = 1,
@@ -54,19 +62,17 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 Levels = _nullIfEmpty(SelectedLevels),
                 Times = _convertHours(SelectedTimes)
             };
-            _populate();
-            return Page();
         }
+
         public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
         {
             try
             {
                 // "10:00-12:00" "10:00"
                 var startTime = TimeSpan.Parse(time.Split('-')[0]);
-
                 await _createBookingRepo.CreateBookingAsync(
+                    1,          // userId (later from session)
                     roomId,
-                    1,          // userId (later from session)/
                     date,
                     startTime,
                     null
@@ -83,11 +89,10 @@ namespace Zealand_Lokale_Booking_UI.Pages
             {
                 TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
             }
-
-            return RedirectToPage();
+            BuildBookingFilterFromSelection();
+            _populate();
+            return Page();
         }
-
-
 
         // helpers
         private static List<T>? _nullIfEmpty<T>(List<T> list) =>
@@ -97,19 +102,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
             hours.Count > 0
                 ? hours.Select(h => new TimeOnly(h, 0)).ToList()
                 : null;
-
-        private static string _formatList<T>(List<T>? list) =>
-            list == null ? "null" : string.Join(", ", list);
-
-        [TempData] public string TempBookingRoomID { get; set; }
-        [TempData] public string TempBookingTime { get; set; }
-        [TempData] public DateTime? TempBookingDate { get; set; }
-        [TempData] public string TempRoomName { get; set; }
-        [TempData] public string TempBuildingName { get; set; }
-        [TempData] public string TempDepartmentName { get; set; }
-
-        public bool ShowPopup { get; set; } = false;
-
         private void _populate()
         {
             AvailableBookings = _filterRepository.GetAvailableBookingSlots((BookingFilter)).ToList();
@@ -159,28 +151,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
         public void OnGet()
         {
             _populate();
-            if (!string.IsNullOrEmpty(TempRoomName))
-            {
-                ShowPopup = true;
-            }
-        }
-        public IActionResult OnPostPrepareBooking(int roomId)
-        {
-            
-            _populate();
-            var booking = AvailableBookings.FirstOrDefault(b => b.RoomID == roomId);
-
-            if (booking != null)
-            {
-                TempRoomName = booking.RoomName;
-                TempBuildingName = booking.BuildingName;
-                TempBookingRoomID = booking.RoomID.ToString();
-                TempBookingDate = booking.Date;
-                TempBookingTime = booking.StartTime.ToString(@"hh\:mm") + "-" + booking.StartTime.Add(new TimeSpan(2, 0, 0)).ToString(@"hh\:mm");
-                TempDepartmentName = booking.DepartmentName;
-
-            }
-            return RedirectToPage();
         }
     }
 }

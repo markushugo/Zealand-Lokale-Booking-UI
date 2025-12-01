@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Zealand Lokale Booking UI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6e45b699863dfaacb3e16b7847f567d9ccb1bf06")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1c4c6115e7bc46cba01391ab1f17a336bb8bfcd2")]
 [assembly: System.Reflection.AssemblyProductAttribute("Zealand Lokale Booking UI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Zealand Lokale Booking UI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

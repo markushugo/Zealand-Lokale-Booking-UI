@@ -1604,9 +1604,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
+      "projectUniqueName": "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
       "projectName": "Zealand Lokale Booking UI",
-      "projectPath": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
+      "projectPath": "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
       "packagesPath": "C:\\Users\\theod\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\theod\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\obj\\",
       "projectStyle": "PackageReference",
@@ -1641,7 +1641,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.300"
+      "SdkAnalysisLevel": "9.0.200"
     },
     "frameworks": {
       "net8.0": {
@@ -1671,7 +1671,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

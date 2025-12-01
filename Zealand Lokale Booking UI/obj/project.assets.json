@@ -1604,11 +1604,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
+      "projectUniqueName": "C:\\Users\\mathi\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
       "projectName": "Zealand Lokale Booking UI",
-      "projectPath": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
-      "packagesPath": "C:\\Users\\theod\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\theod\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\obj\\",
+      "projectPath": "C:\\Users\\mathi\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj",
+      "packagesPath": "C:\\Users\\mathi\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\mathi\\Source\\Repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -11,6 +11,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
     public class BookingModel : PageModel
     {
         private readonly FilterRepository _filterRepository;
+        private readonly CreateBookingRepo _createBookingRepo=new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
 
         public BookingModel(FilterRepository filterRepository)
         {
@@ -56,6 +57,37 @@ namespace Zealand_Lokale_Booking_UI.Pages
             _populate();
             return Page();
         }
+        public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
+        {
+            try
+            {
+                // "10:00-12:00" "10:00"
+                var startTime = TimeSpan.Parse(time.Split('-')[0]);
+
+                await _createBookingRepo.CreateBookingAsync(
+                    roomId,
+                    1,          // userId (later from session)/
+                    date,
+                    startTime,
+                    null
+                );
+
+                TempData["SuccessMessage"] = "Booking created!";
+            }
+            catch (ArgumentException ex)
+            {
+                ModelState.AddModelError("", ex.Message);
+                return Page();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
+            }
+
+            return RedirectToPage();
+        }
+
+
 
         // helpers
         private static List<T>? _nullIfEmpty<T>(List<T> list) =>

@@ -33,6 +33,12 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Mine rum</a>
                         </li>
+                        @if ((bool?)ViewData["ShowBookingExtraLink"] == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/MyBookings">Mine bookings</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <!--right side avigation -->

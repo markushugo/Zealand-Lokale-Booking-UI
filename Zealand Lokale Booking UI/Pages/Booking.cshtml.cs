@@ -10,6 +10,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class BookingModel : PageModel
     {
+
         private readonly FilterRepository _filterRepository;
         private readonly CreateBookingRepo _createBookingRepo=new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
 

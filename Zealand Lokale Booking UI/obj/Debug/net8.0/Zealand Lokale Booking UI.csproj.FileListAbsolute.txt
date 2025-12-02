@@ -165,3 +165,4 @@ C:\Users\marku\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\
 C:\Users\marku\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand .25A17136.Up2Date
 C:\Users\marku\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.genruntimeconfig.cache
 C:\Users\marku\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\ref\Zealand Lokale Booking UI.dll
+C:\Users\mathi\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\swae.build.ex.cache

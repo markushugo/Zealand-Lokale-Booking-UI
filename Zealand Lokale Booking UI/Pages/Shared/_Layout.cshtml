@@ -33,6 +33,18 @@
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-page="/Index">Mine rum</a>
                         </li>
+                        @if ((bool?)ViewData["ShowBookingMyBookingsLink"] == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/MyBookings">Mine bookings</a>
+                            </li>
+                        }
+                        @if ((bool?)ViewData["ShowBookingBookRoomLink"] == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-page="/Booking">Book lokale</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <!--right side avigation -->

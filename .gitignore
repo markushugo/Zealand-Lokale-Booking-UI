@@ -361,3 +361,6 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Zealand Lokale Booking UI/Pages/Login.cshtml
+/Zealand Lokale Booking UI/Pages/Login.cshtml.cs
+/Zealand Lokale Booking UI/Program.cs

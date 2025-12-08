@@ -10,6 +10,7 @@ namespace Zealand_Lokale_Booking_UI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
             string _connectionString =
                 "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;";
 
@@ -32,7 +33,8 @@ namespace Zealand_Lokale_Booking_UI
             });
 
             builder.Services.AddHttpContextAccessor();
-
+            builder.Services.AddScoped<ManageBookingRepo>(sp =>
+                new ManageBookingRepo(_connectionString));
             builder.Services.AddScoped<FilterRepository>(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();

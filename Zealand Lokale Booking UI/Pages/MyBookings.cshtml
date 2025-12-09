@@ -1,7 +1,7 @@
 ﻿@page
 @model Zealand_Lokale_Booking_UI.Pages.MyBookingsModel
 @{
-    ViewData["ShowBookingBookRoomLink"] = true;    
+    ViewData["ShowBookingLinks"] = true;    
 }
 
 <div class="container-fluid mt-4">
@@ -19,12 +19,11 @@
                             <th>Etage</th>
                             <th>Type</th>
                             <th>Tid</th>
-                            <th>Book</th>
                             <th>Slet</th>
                         </tr>
                     </thead>
                     <tbody>
-@*                         @foreach (var b in Model.AvailableBookings)
+                        @foreach (var b in Model.MyBookings.Where(b => b.IsBooked))
                         {
                             <tr>
                                 <td>@b.RoomName</td>
@@ -32,22 +31,22 @@
                                 <td>@b.BuildingName</td>
                                 <td>@b.Level</td>
                                 <td>@b.RoomType</td>
-                                <td>@b.StartTime.ToString(@"hh")-@b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh")</td>
                                 <td>
-                                    <button type="button"
-                                            class="btn btn-primary btn-sm w-100"
-                                            onclick="openBookingModal(this)"
-                                            data-room-id="@b.RoomID"
-                                            data-room-name="@b.RoomName"
-                                            data-department-name="@b.DepartmentName"
-                                            data-building-name="@b.BuildingName"
-                                            data-date="@b.Date.ToString("yyyy-MM-dd")"
-                                            data-time="@b.StartTime.ToString(@"hh\:mm")-@b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh\:mm")">
-                                        Book
-                                    </button>
+                                    @b.Date.ToString("yyyy-MM-dd")
+                                    @b.StartTime.ToString(@"hh\:mm")-
+                                    @b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh\:mm")
+                                </td>
+                                <td>
+                                    <!-- Delete button, TODO: Add handler for delete -->
+                                    <form method="post" asp-page-handler="Delete">
+                                        <input type="hidden" name="bookingId" value="@b.BookingID" />
+                                        <button type="submit" class="btn btn-danger btn-sm w-100">
+                                            Slet
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
-                        } *@
+                        }
                     </tbody>
                 </table>
             </div>

@@ -1,6 +1,9 @@
 ﻿@page
 @model Zealand_Lokale_Booking_UI.Pages.ManageBookingsModel
 @{
+    ViewData["ShowBookingLinks"] = true;
+
+
     @if (TempData["SuccessMessage"] != null)
     {
         <div class="alert alert-success">@TempData["SuccessMessage"]</div>

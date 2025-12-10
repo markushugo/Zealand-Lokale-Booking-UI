@@ -33,6 +33,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 await _bookingService.DeleteBookingAsync(bookingId, userId);
                 TempData["SuccessMessage"] = "Bookingen blev slettet.";
             }
+
         catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;

@@ -1,19 +1,20 @@
 ﻿@page
 @model Zealand_Lokale_Booking_UI.Pages.ManageBookingsModel
+
 @{
     ViewData["ShowBookingLinks"] = true;
-
-
-    @if (TempData["SuccessMessage"] != null)
-    {
-        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
-    }
-
-    @if (TempData["ErrorMessage"] != null)
-    {
-        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
-    }
 }
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
 <div class="container-fluid mt-4">
     <div class="row">
         <!-- SIDENAV -->
@@ -31,13 +32,15 @@
                         @foreach (var option in Model.DepartmentOptions)
                         {
                             <label class="d-block ms-3 mt-2">
-                                <input type="checkbox" name="SelectedDepartments" value="@option.Value" @(Model.SelectedDepartments.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                <input type="checkbox"
+                                       name="SelectedDepartments"
+                                       value="@option.Value"
+                                       @(Model.SelectedDepartments.Contains(int.Parse(option.Value)) ? "checked" : "") />
                                 @option.Text
                             </label>
                         }
                     </details>
                 </div>
-
 
                 <!-- Buildings -->
                 <div class="mb-3">
@@ -49,7 +52,10 @@
                         @foreach (var option in Model.BuildingOptions)
                         {
                             <label class="d-block ms-3 mt-2">
-                                <input type="checkbox" name="SelectedBuildings" value="@option.Value" @(Model.SelectedBuildings.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                <input type="checkbox"
+                                       name="SelectedBuildings"
+                                       value="@option.Value"
+                                       @(Model.SelectedBuildings.Contains(int.Parse(option.Value)) ? "checked" : "") />
                                 @option.Text
                             </label>
                         }
@@ -83,7 +89,10 @@
                         @foreach (var option in Model.RoomTypeOptions)
                         {
                             <label class="d-block ms-3 mt-2">
-                                <input type="checkbox" name="SelectedRoomTypes" value="@option.Value" @(Model.SelectedRoomTypes.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                <input type="checkbox"
+                                       name="SelectedRoomTypes"
+                                       value="@option.Value"
+                                       @(Model.SelectedRoomTypes.Contains(int.Parse(option.Value)) ? "checked" : "") />
                                 @option.Text
                             </label>
                         }
@@ -100,7 +109,10 @@
                         @foreach (var option in Model.TimeOptions)
                         {
                             <label class="d-block ms-3 mt-2">
-                                <input type="checkbox" name="SelectedTimes" value="@option.Value" @(Model.SelectedTimes.Contains(int.Parse(option.Value)) ? "checked" : "") />
+                                <input type="checkbox"
+                                       name="SelectedTimes"
+                                       value="@option.Value"
+                                       @(Model.SelectedTimes.Contains(int.Parse(option.Value)) ? "checked" : "") />
                                 @option.Text
                             </label>
                         }
@@ -114,7 +126,7 @@
                 </div>
 
                 <!-- Submit -->
-                <button type="submit" class="btn btn-dark w-100 mt-2"> Filtrer </button>
+                <button type="submit" class="btn btn-dark w-100 mt-2">Filtrer</button>
             </form>
         </div>
 
@@ -145,12 +157,40 @@
                                 <td>@b.BuildingName</td>
                                 <td>@b.Level</td>
                                 <td>@b.RoomType</td>
-                                <td>@b.StartTime.ToString(@"hh")-@b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh")</td>
+                                <td>
+                                    @b.Date.ToString("yyyy-MM-dd")
+                                    @b.StartTime.ToString(@"hh\:mm")-
+                                    @b.StartTime.Add(TimeSpan.FromHours(2)).ToString(@"hh\:mm")
+                                </td>
                                 <td>@b.UserName</td>
                                 <td>
-                                    <form method="post" asp-page-handler="Delete" class="d-inline">
+                                    <form method="post"
+                                          asp-page-handler="Delete"
+                                          class="d-inline">
                                         <input type="hidden" name="bookingId" value="@b.BookingID" />
+                                        @* Keep the currently selected filters *@
+                                        @foreach (var id in Model.SelectedDepartments)
+                                        {
+                                            <input type="hidden" name="SelectedDepartments" value="@id" />
+                                        }
+                                        @foreach (var id in Model.SelectedBuildings)
+                                        {
+                                            <input type="hidden" name="SelectedBuildings" value="@id" />
+                                        }
+                                        @foreach (var level in Model.SelectedLevels)
+                                        {
+                                            <input type="hidden" name="SelectedLevels" value="@level" />
+                                        }
+                                        @foreach (var id in Model.SelectedRoomTypes)
+                                        {
+                                            <input type="hidden" name="SelectedRoomTypes" value="@id" />
+                                        }
+                                        @foreach (var hour in Model.SelectedTimes)
+                                        {
+                                            <input type="hidden" name="SelectedTimes" value="@hour" />
+                                        }
 
+                                        <input type="hidden" asp-for="SelectedDate" />
                                         <button type="submit"
                                                 class="btn btn-danger btn-sm w-100"
                                                 onclick="return confirm('Er du sikker på, at du vil slette denne booking?');">
@@ -166,102 +206,3 @@
         </div>
     </div>
 </div>
-
-
-<div id="modalBackdrop" class="modal-backdrop fade" style="display:none;"></div>
-
-<div id="bookingModal" class="modal" tabindex="-1" style="display:none;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <h5 class="modal-title">Bekræft booking</h5>
-                <button type="button" class="btn-close" aria-label="Close" onclick="closeBookingModal()"></button>
-            </div>
-
-            <form method="post" asp-page-handler="CreateBooking">
-                <!-- These three go to OnPostCreateBookingAsync -->
-                <input type="hidden" name="roomId" id="modalRoomId" />
-                <input type="hidden" name="date" id="modalDate" />
-                <input type="hidden" name="time" id="modalTime" />
-
-                @* Keep the currently selected filters *@
-                @foreach (var id in Model.SelectedDepartments)
-                {
-                    <input type="hidden" name="SelectedDepartments" value="@id" />
-                }
-                @foreach (var id in Model.SelectedBuildings)
-                {
-                    <input type="hidden" name="SelectedBuildings" value="@id" />
-                }
-                @foreach (var level in Model.SelectedLevels)
-                {
-                    <input type="hidden" name="SelectedLevels" value="@level" />
-                }
-                @foreach (var id in Model.SelectedRoomTypes)
-                {
-                    <input type="hidden" name="SelectedRoomTypes" value="@id" />
-                }
-                @foreach (var hour in Model.SelectedTimes)
-                {
-                    <input type="hidden" name="SelectedTimes" value="@hour" />
-                }
-
-                <input type="hidden" asp-for="SelectedDate" />
-
-
-                <div class="modal-body">
-                    <p><strong>Lokale:</strong> <span id="modalRoomName"></span></p>
-                    <p><strong>Afdeling:</strong> <span id="modalDepartmentName"></span></p>
-                    <p><strong>Bygning:</strong> <span id="modalBuildingName"></span></p>
-                    <p><strong>Dato:</strong> <span id="modalDateText"></span></p>
-                    <p><strong>Tid:</strong> <span id="modalTimeText"></span></p>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" onclick="closeBookingModal()">Annullér</button>
-                    <button type="submit" class="btn btn-primary">Bekræft booking</button>
-                </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
-
-<script>
-    function openBookingModal(button) {
-        // Read from data- attributes
-        const roomId = button.dataset.roomId;
-        const roomName = button.dataset.roomName;
-        const departmentName = button.dataset.departmentName;
-        const buildingName = button.dataset.buildingName;
-        const date = button.dataset.date;
-        const time = button.dataset.time;
-
-        // Fill hidden inputs (for POST)
-        document.getElementById('modalRoomId').value = roomId;
-        document.getElementById('modalDate').value = date;
-        document.getElementById('modalTime').value = time;
-
-        // Fill visible text
-        document.getElementById('modalRoomName').textContent = roomName;
-        document.getElementById('modalDepartmentName').textContent = departmentName;
-        document.getElementById('modalBuildingName').textContent = buildingName;
-        document.getElementById('modalDateText').textContent = date;
-        document.getElementById('modalTimeText').textContent = time;
-
-        // Show modal + backdrop
-        document.getElementById('bookingModal').style.display = 'block';
-        document.getElementById('bookingModal').classList.add('show');
-        document.getElementById('modalBackdrop').style.display = 'block';
-        document.getElementById('modalBackdrop').classList.add('show');
-    }
-
-    function closeBookingModal() {
-        document.getElementById('bookingModal').classList.remove('show');
-        document.getElementById('bookingModal').style.display = 'none';
-        document.getElementById('modalBackdrop').classList.remove('show');
-        document.getElementById('modalBackdrop').style.display = 'none';
-    }
-</script>

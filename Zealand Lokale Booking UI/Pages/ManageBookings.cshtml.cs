@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Zealand_Lokale_Booking_Library.Models;
-using Zealand_Lokale_Booking_Library.Repos;
 using Zealand_Lokale_Booking_Library.Services;
 
 namespace Zealand_Lokale_Booking_UI.Pages
@@ -11,13 +10,16 @@ namespace Zealand_Lokale_Booking_UI.Pages
     {
         private readonly IBookingService _bookingService;
 
+        // Midlertidigt: hardcoded lærer-bruger til test
+        private const int CurrentUserId = 5; // TODO: hent fra login senere
+
         public ManageBookingsModel(IBookingService bookingService)
         {
             _bookingService = bookingService;
         }
 
         public FilterOptions Filters { get; set; } = new();
-        public BookingFilter BookingFilter { get; set; } = new BookingFilter { UserID = 1 };
+        public BookingFilter BookingFilter { get; set; } = new BookingFilter { UserID = CurrentUserId };
         public List<Booking> AvailableBookings { get; set; } = new();
 
         public List<SelectListItem> DepartmentOptions { get; set; } = new();
@@ -25,6 +27,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
         public List<SelectListItem> LevelOptions { get; set; } = new();
         public List<SelectListItem> RoomTypeOptions { get; set; } = new();
         public List<SelectListItem> TimeOptions { get; set; } = new();
+
         public DateTime? Date { get; set; }
 
         [BindProperty] public List<int> SelectedDepartments { get; set; } = new();
@@ -34,66 +37,33 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
-
-        public async Task OnGetAsync()
+        // GET: intial load
+        public void OnGet()
         {
             BuildBookingFilterFromSelection();
-            await _populateAsync();
+            Populate();
         }
 
-
-        public async Task<IActionResult> OnPostFilterAsync()
+        // POST: filter
+        public IActionResult OnPostFilter()
         {
             if (!ModelState.IsValid)
             {
-                await _populateAsync();
+                Populate();
                 return Page();
             }
 
             BuildBookingFilterFromSelection();
-            await _populateAsync();
+            Populate();
             return Page();
         }
 
-        public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
-        {
-            try
-            {
-                // "10:00-12:00" "10:00"
-                var startTime = TimeSpan.Parse(time.Split('-')[0]);
-
-                int userId = 1; // TODO: get from session/login later when implemented
-
-                await _bookingService.CreateBookingAsync(
-                    userId,          // userId (later from session)
-                    roomId,
-                    date,
-                    startTime,
-                    null
-                );
-
-                TempData["SuccessMessage"] = "Booking created!";
-            }
-            catch (ArgumentException ex)
-            {
-                ModelState.AddModelError("", ex.Message);
-                return Page();
-            }
-            catch (Exception ex)
-            {
-                TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
-            }
-            BuildBookingFilterFromSelection();
-            await _populateAsync();
-            return Page();
-        }
+        // POST: Delete booking
         public async Task<IActionResult> OnPostDeleteAsync(int bookingId)
         {
-            int userId = 5; // TODO: hent fra login/session senere
-            Console.WriteLine("DELETE AS USER: " + userId);
             try
             {
-                await _bookingService.DeleteBookingAsync(bookingId, userId);
+                await _bookingService.DeleteBookingAsync(bookingId, CurrentUserId);
                 TempData["SuccessMessage"] = "Bookingen blev slettet.";
             }
             catch (Exception ex)
@@ -101,82 +71,67 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 TempData["ErrorMessage"] = "Kunne ikke slette bookingen: " + ex.Message;
             }
 
-            // Byg filter ud fra de (evt.) postede værdier
             BuildBookingFilterFromSelection();
-            await _populateAsync();
+            Populate();
             return Page();
         }
 
-        // helpers
+        // ----------------- helpers -----------------
+
         private void BuildBookingFilterFromSelection()
         {
             BookingFilter = new BookingFilter
             {
-                UserID = 1,
+                UserID = CurrentUserId,
                 Date = SelectedDate,
-                DepartmentIds = _nullIfEmpty(SelectedDepartments),
-                BuildingIds = _nullIfEmpty(SelectedBuildings),
+                DepartmentIds = NullIfEmpty(SelectedDepartments),
+                BuildingIds = NullIfEmpty(SelectedBuildings),
                 RoomIds = null,
-                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
-                Levels = _nullIfEmpty(SelectedLevels),
-                Times = _convertHours(SelectedTimes)
+                RoomTypeIds = NullIfEmpty(SelectedRoomTypes),
+                Levels = NullIfEmpty(SelectedLevels),
+                Times = ConvertHours(SelectedTimes)
             };
         }
 
-        private static List<T>? _nullIfEmpty<T>(List<T> list) =>
-            list.Count > 0 ? list : null;
-
-        private static List<TimeOnly>? _convertHours(List<int> hours) =>
-            hours.Count > 0
-                ? hours.Select(h => new TimeOnly(h, 0)).ToList()
-                : null;
-
-        private async Task _populateAsync()
+        private void Populate()
         {
-            AvailableBookings = _bookingService.GetFilteredBookings(BookingFilter).ToList();
-            int userId = 1; // TODO: change when there is login
-            var filterData = _bookingService.GetFilterOptionsForUserAsync(userId).Result;
+            // Get bookings based on filter
+            AvailableBookings = _bookingService
+                .GetFilteredBookings(BookingFilter)
+                .ToList();
+
+            // Filter options for this user
+            var filterData = _bookingService
+                .GetFilterOptionsForUserAsync(CurrentUserId)
+                .Result;
 
             DepartmentOptions = filterData.Departments
-                .Select(d => new SelectListItem
-                {
-                    Value = d.Key,
-                    Text = d.Value
-                })
+                .Select(d => new SelectListItem { Value = d.Key, Text = d.Value })
                 .ToList();
 
             BuildingOptions = filterData.Buildings
-                .Select(b => new SelectListItem
-                {
-                    Value = b.Key,
-                    Text = b.Value
-                })
+                .Select(b => new SelectListItem { Value = b.Key, Text = b.Value })
                 .ToList();
 
             LevelOptions = filterData.LevelOptions
-                .Select(l => new SelectListItem
-                {
-                    Value = l.Key,
-                    Text = l.Value
-                })
+                .Select(l => new SelectListItem { Value = l.Key, Text = l.Value })
                 .ToList();
 
             RoomTypeOptions = filterData.RoomTypes
-                .Select(rt => new SelectListItem
-                {
-                    Value = rt.Key,
-                    Text = rt.Value
-                })
+                .Select(rt => new SelectListItem { Value = rt.Key, Text = rt.Value })
                 .ToList();
 
             TimeOptions = filterData.TimeSlots
-                .Select(t => new SelectListItem
-                {
-                    Value = t.Key,
-                    Text = t.Value
-                })
+                .Select(t => new SelectListItem { Value = t.Key, Text = t.Value })
                 .ToList();
         }
-        
+
+        private static List<T>? NullIfEmpty<T>(List<T> list) =>
+            list.Count > 0 ? list : null;
+
+        private static List<TimeOnly>? ConvertHours(List<int> hours) =>
+            hours.Count > 0
+                ? hours.Select(h => new TimeOnly(h, 0)).ToList()
+                : null;
     }
 }

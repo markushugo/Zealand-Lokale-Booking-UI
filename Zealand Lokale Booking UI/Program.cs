@@ -1,6 +1,5 @@
 ﻿using Zealand_Lokale_Booking_Library.Repos;
 using Zealand_Lokale_Booking_Library.Services;
-using Zealand_Lokale_Booking_Library.Repos;
 
 namespace Zealand_Lokale_Booking_UI
 {
@@ -10,18 +9,33 @@ namespace Zealand_Lokale_Booking_UI
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-            string _connectionString =
-                "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;";
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'DefaultConnection' is not configured.");
+            }
 
-            // Razor Pages
+            // Register repositories from the class library
+            builder.Services.AddScoped<ICreateBookingRepo>(sp =>
+                new CreateBookingRepo(connectionString));
+
+            builder.Services.AddScoped<IGetBookingsRepo>(sp =>
+                new GetBookingsRepo(connectionString));
+
+            builder.Services.AddScoped<IBookingRepo>(sp =>
+                new BookingRepo(connectionString));
+
+            builder.Services.AddScoped<IFilterRepo>(sp =>
+                new FilterRepo(connectionString));
+
+            builder.Services.AddScoped<IManageBookingRepo>(sp =>
+                new ManageBookingRepo(connectionString));
+
+            // Register the BookingService
+            builder.Services.AddScoped<IBookingService, BookingService>();
+
             builder.Services.AddRazorPages();
-
-            // -------------------------------
-            // Register interfaces -> implementations
-            // -------------------------------
-            //builder.Services.AddSingleton<ICreateBookingRepo>(new CreateBookingRepo(_connectionString));
-            //builder.Services.AddSingleton<ICreateBookingService, CreateBookingService>();
 
             // Session support
             builder.Services.AddDistributedMemoryCache();
@@ -33,14 +47,6 @@ namespace Zealand_Lokale_Booking_UI
             });
 
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddScoped<ManageBookingRepo>(sp =>
-                new ManageBookingRepo(_connectionString));
-            builder.Services.AddScoped<FilterRepository>(sp =>
-            {
-                var config = sp.GetRequiredService<IConfiguration>();
-                var connStr = "Server=(localdb)\\MSSQLlocaldb; database=ZealandBooking; encrypt=false; integrated security=true;";
-                return new FilterRepository(connStr);
-            });
 
             var app = builder.Build();
 

@@ -34,32 +34,25 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
+
+        public async Task OnGetAsync()
+        {
+            BuildBookingFilterFromSelection();
+            await _populateAsync();
+        }
+
+
         public async Task<IActionResult> OnPostFilterAsync()
         {
             if (!ModelState.IsValid)
             {
-                _populate();
+                await _populateAsync();
                 return Page();
             }
 
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
-        }
-
-        private void BuildBookingFilterFromSelection()
-        {
-            BookingFilter = new BookingFilter
-            {
-                UserID = 1,
-                Date = SelectedDate,
-                DepartmentIds = _nullIfEmpty(SelectedDepartments),
-                BuildingIds = _nullIfEmpty(SelectedBuildings),
-                RoomIds = null,
-                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
-                Levels = _nullIfEmpty(SelectedLevels),
-                Times = _convertHours(SelectedTimes)
-            };
         }
 
         public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
@@ -68,8 +61,11 @@ namespace Zealand_Lokale_Booking_UI.Pages
             {
                 // "10:00-12:00" "10:00"
                 var startTime = TimeSpan.Parse(time.Split('-')[0]);
+
+                int userId = 1; // TODO: get from session/login later when implemented
+
                 await _bookingService.CreateBookingAsync(
-                    1,          // userId (later from session)
+                    userId,          // userId (later from session)
                     roomId,
                     date,
                     startTime,
@@ -88,7 +84,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
             }
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
         }
         public async Task<IActionResult> OnPostDeleteAsync(int bookingId)
@@ -107,11 +103,26 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
             // Byg filter ud fra de (evt.) postede værdier
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
         }
 
         // helpers
+        private void BuildBookingFilterFromSelection()
+        {
+            BookingFilter = new BookingFilter
+            {
+                UserID = 1,
+                Date = SelectedDate,
+                DepartmentIds = _nullIfEmpty(SelectedDepartments),
+                BuildingIds = _nullIfEmpty(SelectedBuildings),
+                RoomIds = null,
+                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
+                Levels = _nullIfEmpty(SelectedLevels),
+                Times = _convertHours(SelectedTimes)
+            };
+        }
+
         private static List<T>? _nullIfEmpty<T>(List<T> list) =>
             list.Count > 0 ? list : null;
 
@@ -119,7 +130,8 @@ namespace Zealand_Lokale_Booking_UI.Pages
             hours.Count > 0
                 ? hours.Select(h => new TimeOnly(h, 0)).ToList()
                 : null;
-        private void _populate()
+
+        private async Task _populateAsync()
         {
             AvailableBookings = _bookingService.GetFilteredBookings(BookingFilter).ToList();
             int userId = 1; // TODO: change when there is login
@@ -164,11 +176,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
                     Text = t.Value
                 })
                 .ToList();
-        }
-        public void OnGet()
-        {
-            BuildBookingFilterFromSelection();
-            _populate();
         }
         
     }

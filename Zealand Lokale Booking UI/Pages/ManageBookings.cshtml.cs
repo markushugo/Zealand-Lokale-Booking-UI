@@ -3,19 +3,17 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Zealand_Lokale_Booking_Library.Models;
 using Zealand_Lokale_Booking_Library.Repos;
+using Zealand_Lokale_Booking_Library.Services;
 
 namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class ManageBookingsModel : PageModel
     {
-        private readonly ManageBookingRepo _manageBookingRepo;
-        private readonly FilterRepository _filterRepository;
-        private readonly CreateBookingRepo _createBookingRepo = new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
+        private readonly IBookingService _bookingService;
 
-        public ManageBookingsModel(ManageBookingRepo manageBookingRepo, FilterRepository filterRepository)
+        public ManageBookingsModel(IBookingService bookingService)
         {
-            _manageBookingRepo = manageBookingRepo ?? throw new ArgumentNullException(nameof(manageBookingRepo));
-            _filterRepository = filterRepository ?? throw new ArgumentNullException(nameof(filterRepository));
+            _bookingService = bookingService;
         }
 
         public FilterOptions Filters { get; set; } = new();
@@ -36,32 +34,25 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
+
+        public async Task OnGetAsync()
+        {
+            BuildBookingFilterFromSelection();
+            await _populateAsync();
+        }
+
+
         public async Task<IActionResult> OnPostFilterAsync()
         {
             if (!ModelState.IsValid)
             {
-                _populate();
+                await _populateAsync();
                 return Page();
             }
 
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
-        }
-
-        private void BuildBookingFilterFromSelection()
-        {
-            BookingFilter = new BookingFilter
-            {
-                UserID = 1,
-                Date = SelectedDate,
-                DepartmentIds = _nullIfEmpty(SelectedDepartments),
-                BuildingIds = _nullIfEmpty(SelectedBuildings),
-                RoomIds = null,
-                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
-                Levels = _nullIfEmpty(SelectedLevels),
-                Times = _convertHours(SelectedTimes)
-            };
         }
 
         public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
@@ -70,8 +61,11 @@ namespace Zealand_Lokale_Booking_UI.Pages
             {
                 // "10:00-12:00" "10:00"
                 var startTime = TimeSpan.Parse(time.Split('-')[0]);
-                await _createBookingRepo.CreateBookingAsync(
-                    1,          // userId (later from session)
+
+                int userId = 1; // TODO: get from session/login later when implemented
+
+                await _bookingService.CreateBookingAsync(
+                    userId,          // userId (later from session)
                     roomId,
                     date,
                     startTime,
@@ -90,7 +84,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
             }
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
         }
         public async Task<IActionResult> OnPostDeleteAsync(int bookingId)
@@ -99,7 +93,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
             Console.WriteLine("DELETE AS USER: " + userId);
             try
             {
-                await _manageBookingRepo.DeleteBookingAsync(bookingId, userId);
+                await _bookingService.DeleteBookingAsync(bookingId, userId);
                 TempData["SuccessMessage"] = "Bookingen blev slettet.";
             }
             catch (Exception ex)
@@ -109,11 +103,26 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
             // Byg filter ud fra de (evt.) postede værdier
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
         }
 
         // helpers
+        private void BuildBookingFilterFromSelection()
+        {
+            BookingFilter = new BookingFilter
+            {
+                UserID = 1,
+                Date = SelectedDate,
+                DepartmentIds = _nullIfEmpty(SelectedDepartments),
+                BuildingIds = _nullIfEmpty(SelectedBuildings),
+                RoomIds = null,
+                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
+                Levels = _nullIfEmpty(SelectedLevels),
+                Times = _convertHours(SelectedTimes)
+            };
+        }
+
         private static List<T>? _nullIfEmpty<T>(List<T> list) =>
             list.Count > 0 ? list : null;
 
@@ -121,11 +130,12 @@ namespace Zealand_Lokale_Booking_UI.Pages
             hours.Count > 0
                 ? hours.Select(h => new TimeOnly(h, 0)).ToList()
                 : null;
-        private void _populate()
+
+        private async Task _populateAsync()
         {
-            AvailableBookings = _manageBookingRepo.GetFilteredBookings(BookingFilter).ToList();
+            AvailableBookings = _bookingService.GetFilteredBookings(BookingFilter).ToList();
             int userId = 1; // TODO: change when there is login
-            var filterData = _filterRepository.GetFilterOptionsForUserAsync(userId).Result;
+            var filterData = _bookingService.GetFilterOptionsForUserAsync(userId).Result;
 
             DepartmentOptions = filterData.Departments
                 .Select(d => new SelectListItem
@@ -166,11 +176,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
                     Text = t.Value
                 })
                 .ToList();
-        }
-        public void OnGet()
-        {
-            BuildBookingFilterFromSelection();
-            _populate();
         }
         
     }

@@ -11,12 +11,11 @@ namespace Zealand_Lokale_Booking_UI.Pages
     public class BookingModel : PageModel
     {
 
-        private readonly FilterRepository _filterRepository;
-        private readonly CreateBookingRepo _createBookingRepo=new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
+        private readonly IBookingService _bookingService;
 
-        public BookingModel(FilterRepository filterRepository)
+        public BookingModel(IBookingService bookingService)
         {
-            _filterRepository = filterRepository;
+            _bookingService = bookingService;
         }
 
         public FilterOptions Filters { get; set; } = new();
@@ -37,42 +36,39 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
 
+        // GET
+        public async Task OnGetAsync()
+        {
+            await _populateAsync();
+        }
+
+        // POST: filter form
         public async Task<IActionResult> OnPostFilterAsync()
         {
             if (!ModelState.IsValid)
             {
-                _populate();
+                await _populateAsync();
                 return Page();
             }
 
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
         }
 
-        private void BuildBookingFilterFromSelection()
-        {
-            BookingFilter = new BookingFilter
-            {
-                UserID = 1,
-                Date = SelectedDate,
-                DepartmentIds = _nullIfEmpty(SelectedDepartments),
-                BuildingIds = _nullIfEmpty(SelectedBuildings),
-                RoomIds = null,
-                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
-                Levels = _nullIfEmpty(SelectedLevels),
-                Times = _convertHours(SelectedTimes)
-            };
-        }
-
+        // POST: create booking
         public async Task<IActionResult> OnPostCreateBookingAsync(int roomId, DateTime date, string time)
         {
             try
             {
                 // "10:00-12:00" "10:00"
                 var startTime = TimeSpan.Parse(time.Split('-')[0]);
-                await _createBookingRepo.CreateBookingAsync(
-                    1,          // userId (later from session)
+
+                // TODO: get userId from session when there is login
+                int userId = 1;
+
+                await _bookingService.CreateBookingAsync(
+                    userId,
                     roomId,
                     date,
                     startTime,
@@ -84,6 +80,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
             catch (ArgumentException ex)
             {
                 ModelState.AddModelError("", ex.Message);
+                await _populateAsync();
                 return Page();
             }
             catch (Exception ex)
@@ -91,11 +88,27 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 TempData["ErrorMessage"] = "An unexpected error occurred: " + ex.Message;
             }
             BuildBookingFilterFromSelection();
-            _populate();
+            await _populateAsync();
             return Page();
         }
 
-        // helpers
+
+        // Helpers
+        private void BuildBookingFilterFromSelection()
+        {
+            BookingFilter = new BookingFilter
+            {
+                UserID = 1, // TODO: change when there is login
+                Date = SelectedDate,
+                DepartmentIds = _nullIfEmpty(SelectedDepartments),
+                BuildingIds = _nullIfEmpty(SelectedBuildings),
+                RoomIds = null,
+                RoomTypeIds = _nullIfEmpty(SelectedRoomTypes),
+                Levels = _nullIfEmpty(SelectedLevels),
+                Times = _convertHours(SelectedTimes)
+            };
+        }
+
         private static List<T>? _nullIfEmpty<T>(List<T> list) =>
             list.Count > 0 ? list : null;
 
@@ -103,11 +116,16 @@ namespace Zealand_Lokale_Booking_UI.Pages
             hours.Count > 0
                 ? hours.Select(h => new TimeOnly(h, 0)).ToList()
                 : null;
-        private void _populate()
+
+        private async Task _populateAsync()
         {
-            AvailableBookings = _filterRepository.GetAvailableBookingSlots((BookingFilter)).ToList();
+            AvailableBookings = _bookingService
+                .GetAvailableBookingSlots(BookingFilter)
+                .ToList();
+
             int userId = 1; // TODO: change when there is login
-            var filterData = _filterRepository.GetFilterOptionsForUserAsync(userId).Result;
+
+            var filterData = await _bookingService.GetFilterOptionsForUserAsync(userId);
 
             DepartmentOptions = filterData.Departments
                 .Select(d => new SelectListItem
@@ -149,9 +167,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 })
                 .ToList();
         }
-        public void OnGet()
-        {
-            _populate();
-        }
+        
     }
 }

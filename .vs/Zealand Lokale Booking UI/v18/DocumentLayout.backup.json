@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{26BBC0BA-8B9C-4AE4-9D0B-5195590B93F4}|Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj|c:\\users\\mathi\\source\\repos\\zealand-lokale-booking-ui\\zealand lokale booking ui\\pages\\managebookings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{26BBC0BA-8B9C-4AE4-9D0B-5195590B93F4}|Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj|solutionrelative:zealand lokale booking ui\\pages\\managebookings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{26BBC0BA-8B9C-4AE4-9D0B-5195590B93F4}|Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj|c:\\users\\mathi\\source\\repos\\zealand-lokale-booking-ui\\zealand lokale booking ui\\pages\\mybookings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{26BBC0BA-8B9C-4AE4-9D0B-5195590B93F4}|Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj|solutionrelative:zealand lokale booking ui\\pages\\mybookings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{26BBC0BA-8B9C-4AE4-9D0B-5195590B93F4}|Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj|c:\\users\\mathi\\source\\repos\\zealand-lokale-booking-ui\\zealand lokale booking ui\\pages\\managebookings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{26BBC0BA-8B9C-4AE4-9D0B-5195590B93F4}|Zealand Lokale Booking UI\\Zealand Lokale Booking UI.csproj|solutionrelative:zealand lokale booking ui\\pages\\managebookings.cshtml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,30 +18,30 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "MyBookings.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\MyBookings.cshtml.cs",
               "RelativeDocumentMoniker": "Zealand Lokale Booking UI\\Pages\\MyBookings.cshtml.cs",
               "ToolTip": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\MyBookings.cshtml.cs",
               "RelativeToolTip": "Zealand Lokale Booking UI\\Pages\\MyBookings.cshtml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-10T11:10:20.316Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ManageBookings.cshtml.cs",
               "DocumentMoniker": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\ManageBookings.cshtml.cs",
               "RelativeDocumentMoniker": "Zealand Lokale Booking UI\\Pages\\ManageBookings.cshtml.cs",
               "ToolTip": "C:\\Users\\mathi\\source\\repos\\Zealand-Lokale-Booking-UI\\Zealand Lokale Booking UI\\Pages\\ManageBookings.cshtml.cs",
               "RelativeToolTip": "Zealand Lokale Booking UI\\Pages\\ManageBookings.cshtml.cs",
-              "ViewState": "AgIAABQAAAAAAAAAAAAwwAoAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAF8AAABMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-10T11:10:29.901Z",
               "EditorCaption": ""

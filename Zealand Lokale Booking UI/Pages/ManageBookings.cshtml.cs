@@ -7,7 +7,10 @@ using Zealand_Lokale_Booking_Library.Repos;
 namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class ManageBookingsModel : PageModel
+
     {
+        [BindProperty] string UserName { get; set; }
+
         private readonly ManageBookingRepo _manageBookingRepo;
         private readonly FilterRepository _filterRepository;
         private readonly CreateBookingRepo _createBookingRepo = new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");

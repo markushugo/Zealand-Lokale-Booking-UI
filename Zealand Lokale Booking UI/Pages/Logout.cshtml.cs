@@ -18,4 +18,3 @@ namespace Zealand_Lokale_Booking_UI.Pages
         }
     }
 }
-

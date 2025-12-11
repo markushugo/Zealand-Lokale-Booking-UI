@@ -27,19 +27,24 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
         public IActionResult OnPost()
         {
+            // Debug output
+            Console.WriteLine($"Trying to login with: {LoginEmail}");
+
             var user = _userService.ValidateLogin(LoginEmail, LoginPassword);
 
             if (user == null)
             {
+                Console.WriteLine("Login failed - user not found");
                 ErrorMessage = "Forkert email eller password.";
                 return Page();
             }
 
-            // Session set
+            Console.WriteLine($"Login success for: {user.Name}");
+
             HttpContext.Session.SetInt32("UserID", user.UserID);
             HttpContext.Session.SetString("UserName", user.Name);
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Home");
         }
     }
 }

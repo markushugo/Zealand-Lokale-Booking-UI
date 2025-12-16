@@ -13,6 +13,9 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
         private readonly IBookingService _bookingService;
 
+        private readonly FilterRepository _filterRepository;
+        private readonly CreateBookingRepo _createBookingRepo=new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
+
         public BookingModel(IBookingService bookingService)
         {
             _bookingService = bookingService;
@@ -35,6 +38,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
         [BindProperty] public List<int> SelectedRoomTypes { get; set; } = new();
         [BindProperty] public List<int> SelectedTimes { get; set; } = new();
         [BindProperty] public DateTime SelectedDate { get; set; } = DateTime.Today;
+        [BindProperty]string UserName{get; set;}
 
         // GET
         public async Task OnGetAsync()
@@ -167,6 +171,25 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 })
                 .ToList();
         }
-        
+        public IActionResult OnGet()
+        {
+
+            _populate();
+            // Tjek om sessionen er sat
+            int? userId = HttpContext.Session.GetInt32("UserID");
+            string userName = HttpContext.Session.GetString("UserName");
+
+            if (userId == null)
+            {
+                // Hvis ikke logget ind, redirect til login
+                return RedirectToPage("/LoginPage");
+            }
+
+            // Hvis logget ind, gem brugernavn til view
+            UserName = userName;
+            return Page();
+
+            
+        }
     }
 }

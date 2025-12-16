@@ -53,7 +53,7 @@ namespace Zealand_Lokale_Booking_UI
             builder.Services.AddHttpContextAccessor();
 
             builder.Services.AddScoped<IUserRepo>(sp =>
-                new UserRepo(_connectionString));
+                new UserRepo(connectionString));
             builder.Services.AddScoped<IUserService, UserService>();
 
             var app = builder.Build();

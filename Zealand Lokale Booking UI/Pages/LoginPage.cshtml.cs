@@ -43,6 +43,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
             HttpContext.Session.SetInt32("UserID", user.UserID);
             HttpContext.Session.SetString("UserName", user.Name);
+            HttpContext.Session.SetInt32("UserTypeID", user.UserTypeID);
 
             return RedirectToPage("/Home");
         }

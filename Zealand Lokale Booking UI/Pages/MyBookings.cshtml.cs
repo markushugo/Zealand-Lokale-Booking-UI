@@ -15,32 +15,38 @@ namespace Zealand_Lokale_Booking_UI.Pages
             _bookingService = bookingService;
         }
 
-        public List<Booking> MyBookings { get; set; } = new();
+        public List<Booking>? MyBookings { get; set; } = new();
 
         public async Task OnGetAsync()
         {
-            // TODO: replace with logged-in user ID when authentication is implemented
-            int userId = 1;
-            MyBookings = await _bookingService.GetBookingsByUserIdAsync(userId);
+
+            var userId = HttpContext.Session.GetInt32("UserID");
+            try
+            {
+                MyBookings = await _bookingService.GetBookingsByUserIdAsync((int)userId);
+            }
+            catch (Exception ex) 
+            {
+                MyBookings = null;
+            }
         }
         public async Task<IActionResult> OnPostDeleteAsync(int bookingId)
         {
-            // TODO: når der kommer login, hentes userId fra session/claims
-            int userId = 1;
+            var userId = HttpContext.Session.GetInt32("UserID");
 
-        try
+            try
             {
-                await _bookingService.DeleteBookingAsync(bookingId, userId);
+                await _bookingService.DeleteBookingAsync(bookingId, (int)userId);
                 TempData["SuccessMessage"] = "Bookingen blev slettet.";
             }
 
-        catch (Exception ex)
+            catch (Exception ex)
             {
                 TempData["ErrorMessage"] = ex.Message;
             }
 
             // Get bookings again to refresh the list
-            MyBookings = await _bookingService.GetBookingsByUserIdAsync(userId);
+            MyBookings = await _bookingService.GetBookingsByUserIdAsync((int)userId);
             return Page();
         }
     }

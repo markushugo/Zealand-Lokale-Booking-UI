@@ -162,8 +162,9 @@ C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\
 C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand .25A17136.Up2Date
 C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\Zealand Lokale Booking UI.genruntimeconfig.cache
 C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\ref\Zealand Lokale Booking UI.dll
-C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rpswa.dswa.cache.json
-C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rjimswa.dswa.cache.json
-C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rjsmrazor.dswa.cache.json
-C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\rjsmcshtml.dswa.cache.json
-C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.build.json.cache
+C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets\msbuild.Zealand Lokale Booking UI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets\msbuild.Zealand Lokale Booking UI.Microsoft.AspNetCore.StaticWebAssetEndpoints.props
+C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets\msbuild.build.Zealand Lokale Booking UI.props
+C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Zealand Lokale Booking UI.props
+C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Zealand Lokale Booking UI.props
+C:\Users\theod\source\repos\Zealand-Lokale-Booking-UI\Zealand Lokale Booking UI\obj\Debug\net8.0\staticwebassets.pack.json

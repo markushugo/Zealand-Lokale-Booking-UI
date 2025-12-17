@@ -36,12 +36,6 @@ namespace Zealand_Lokale_Booking_UI
             builder.Services.AddScoped<IBookingService, BookingService>();
 
             builder.Services.AddRazorPages();
-
-            // Session support
-            builder.Services.AddRazorPages(options =>
-            {
-                options.Conventions.AddPageRoute("/LoginPage", "");
-            });
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options =>
             {

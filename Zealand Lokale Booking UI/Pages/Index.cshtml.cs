@@ -21,7 +21,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
         {
             // Tjek om sessionen er sat
             int? userId = HttpContext.Session.GetInt32("UserID");
-            string userName = HttpContext.Session.GetString("UserName");
+            string? userName = HttpContext.Session.GetString("UserName");
 
             if (userId == null)
             {

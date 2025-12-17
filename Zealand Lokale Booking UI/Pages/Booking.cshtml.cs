@@ -13,9 +13,6 @@ namespace Zealand_Lokale_Booking_UI.Pages
 
         private readonly IBookingService _bookingService;
 
-        private readonly FilterRepo _filterRepo;
-        private readonly CreateBookingRepo _createBookingRepo=new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
-
         public BookingModel(IBookingService bookingService)
         {
             _bookingService = bookingService;
@@ -64,8 +61,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 // "10:00-12:00" "10:00"
                 var startTime = TimeSpan.Parse(time.Split('-')[0]);
 
-                // TODO: get userId from session when there is login
-                int userId = 1;
+                var userId = (int)HttpContext.Session.GetInt32("UserID");
 
                 await _bookingService.CreateBookingAsync(
                     userId,
@@ -98,7 +94,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
         {
             BookingFilter = new BookingFilter
             {
-                UserID = 1, // TODO: change when there is login
+                UserID = (int)HttpContext.Session.GetInt32("UserID"),
                 Date = SelectedDate,
                 DepartmentIds = _nullIfEmpty(SelectedDepartments),
                 BuildingIds = _nullIfEmpty(SelectedBuildings),
@@ -123,7 +119,7 @@ namespace Zealand_Lokale_Booking_UI.Pages
                 .GetAvailableBookingSlots(BookingFilter)
                 .ToList();
 
-            int userId = 1; // TODO: change when there is login
+            var userId = (int)HttpContext.Session.GetInt32("UserID");
 
             var filterData = await _bookingService.GetFilterOptionsForUserAsync(userId);
 

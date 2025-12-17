@@ -41,10 +41,13 @@
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-page="/Booking">Book lokale</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-page="/ManageBookings">Manage Bookings</a>
+                            @if (Context.Session.GetInt32("UserTypeID") == 2 || Context.Session.GetInt32("UserTypeID") == 3)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-page="/ManageBookings">Manage Bookings</a>
 
-                            </li>
+                                </li>
+                            }
                         }
                     </ul>
                 </div>
@@ -71,7 +74,7 @@
 
                         <li><hr class="dropdown-divider"></li>
 
-                        <li><a class="dropdown-item" href="#">Log ud</a></li>
+                        <li><a class="dropdown-item" asp-page="/Logout">Log ud</a></li>
                     </ul>
                 </div>
 

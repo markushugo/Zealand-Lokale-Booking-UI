@@ -2,13 +2,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Zealand_Lokale_Booking_Library.Models;
+using Zealand_Lokale_Booking_Library.Repos;
 using Zealand_Lokale_Booking_Library.Services;
 
 namespace Zealand_Lokale_Booking_UI.Pages
 {
     public class ManageBookingsModel : PageModel
+
     {
         private readonly IBookingService _bookingService;
+        [BindProperty] string UserName { get; set; }
+
+        private readonly ManageBookingRepo _manageBookingRepo;
+        private readonly FilterRepo _filterRepo;
+        private readonly CreateBookingRepo _createBookingRepo = new CreateBookingRepo("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ZealandBooking;Integrated Security=True;Encrypt=False;TrustServerCertificate=False;");
 
         // Midlertidigt: hardcoded lærer-bruger til test
         private const int CurrentUserId = 5; // TODO: hent fra login senere
